@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Build Atlas — Consultoria em Construção de Patrimônio · Grupo Exithus</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        ink: {
+                            50: '#F4F2EC', 100: '#E6E2D6', 200: '#BFB9A8', 300: '#8C8472',
+                            400: '#4A4538', 500: '#2A2620', 600: '#1C1A16', 700: '#13110E',
+                            800: '#0C0B09', 900: '#060604',
+                        },
+                        gold: {
+                            50: '#FBF3DC', 100: '#F4E2A8', 200: '#EFC36A', 300: '#E8B855',
+                            400: '#D9A441', 500: '#C9962F', 600: '#B8862E', 700: '#8E6722',
+                            800: '#5E4516', 900: '#33260C',
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body class="antialiased min-h-screen">
+
+    <!-- Reusable building symbols -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+            <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#FBF3DC"/>
+                <stop offset="35%" stop-color="#EFC36A"/>
+                <stop offset="70%" stop-color="#D9A441"/>
+                <stop offset="100%" stop-color="#8E6722"/>
+            </linearGradient>
+
+            <symbol id="atlasBuilding" viewBox="0 0 600 600">
+                <g fill="url(#goldGrad)">
+                    <rect x="298.5" y="118" width="3" height="46"/>
+                    <rect x="294" y="135" width="12" height="8"/>
+                    <polygon points="288,148 312,148 308,158 292,158"/>
+                    <rect x="284" y="160" width="32" height="10"/>
+                    <polygon points="280,172 320,172 316,182 284,182"/>
+                    <rect x="278" y="184" width="44" height="46"/>
+                    <rect x="276" y="230" width="48" height="4"/>
+                    <polygon points="262,236 338,236 334,244 266,244"/>
+                    <rect x="262" y="244" width="76" height="56"/>
+                    <rect x="260" y="300" width="80" height="4"/>
+                    <polygon points="244,306 356,306 352,314 248,314"/>
+                    <rect x="244" y="314" width="112" height="64"/>
+                    <rect x="242" y="378" width="116" height="4"/>
+                    <polygon points="222,384 378,384 374,394 226,394"/>
+                    <rect x="222" y="394" width="156" height="48"/>
+                    <rect x="220" y="442" width="160" height="6"/>
+                </g>
+                <g transform="translate(300 110)" fill="none" stroke="url(#goldGrad)" stroke-width="3" stroke-linecap="round">
+                    <circle cx="0" cy="0" r="18"/>
+                    <ellipse cx="0" cy="0" rx="18" ry="6"/>
+                    <line x1="0" y1="-18" x2="0" y2="18"/>
+                    <ellipse cx="0" cy="0" rx="9" ry="18"/>
+                </g>
+                <g fill="#0C0B09">
+                    <rect x="285" y="190" width="2.5" height="36"/><rect x="293" y="190" width="2.5" height="36"/><rect x="301" y="190" width="2.5" height="36"/><rect x="309" y="190" width="2.5" height="36"/>
+                    <rect x="270" y="252" width="2.5" height="44"/><rect x="278" y="252" width="2.5" height="44"/><rect x="286" y="252" width="2.5" height="44"/><rect x="294" y="252" width="2.5" height="44"/><rect x="302" y="252" width="2.5" height="44"/><rect x="310" y="252" width="2.5" height="44"/><rect x="318" y="252" width="2.5" height="44"/><rect x="326" y="252" width="2.5" height="44"/>
+                    <rect x="252" y="322" width="2.5" height="52"/><rect x="260" y="322" width="2.5" height="52"/><rect x="268" y="322" width="2.5" height="52"/><rect x="276" y="322" width="2.5" height="52"/><rect x="284" y="322" width="2.5" height="52"/><rect x="292" y="322" width="2.5" height="52"/><rect x="300" y="322" width="2.5" height="52"/><rect x="308" y="322" width="2.5" height="52"/><rect x="316" y="322" width="2.5" height="52"/><rect x="324" y="322" width="2.5" height="52"/><rect x="332" y="322" width="2.5" height="52"/><rect x="340" y="322" width="2.5" height="52"/>
+                    <rect x="230" y="402" width="2.5" height="36"/><rect x="238" y="402" width="2.5" height="36"/><rect x="246" y="402" width="2.5" height="36"/><rect x="254" y="402" width="2.5" height="36"/><rect x="262" y="402" width="2.5" height="36"/><rect x="270" y="402" width="2.5" height="36"/><rect x="278" y="402" width="2.5" height="36"/><rect x="286" y="402" width="2.5" height="36"/><rect x="294" y="402" width="2.5" height="36"/><rect x="302" y="402" width="2.5" height="36"/><rect x="310" y="402" width="2.5" height="36"/><rect x="318" y="402" width="2.5" height="36"/><rect x="326" y="402" width="2.5" height="36"/><rect x="334" y="402" width="2.5" height="36"/><rect x="342" y="402" width="2.5" height="36"/><rect x="350" y="402" width="2.5" height="36"/><rect x="358" y="402" width="2.5" height="36"/><rect x="366" y="402" width="2.5" height="36"/>
+                </g>
+            </symbol>
+
+            <symbol id="atlasMark" viewBox="0 0 600 600">
+                <circle cx="300" cy="300" r="290" fill="#F4F2EC"/>
+                <circle cx="300" cy="300" r="270" fill="#0C0B09"/>
+                <use href="#atlasBuilding"/>
+                <text x="300" y="503" text-anchor="middle"
+                      font-family="Inter, sans-serif" font-weight="900" font-size="44"
+                      letter-spacing="2" fill="#F4F2EC">BUILD ATLAS</text>
+            </symbol>
+        </defs>
+    </svg>
+
+    <!-- Top bar (Exithus group ribbon) -->
+    <div class="bg-ink-900 border-b border-gold-700/30 py-2 text-[10px] font-mono uppercase tracking-[0.25em] text-ink-200 text-center">
+        Uma empresa do <span class="text-gold-400 font-bold">Grupo Exithus</span> · Investimento, Construção & Legado
+    </div>
+
+    <!-- Container -->
+    <div class="max-w-[1400px] mx-auto border-x border-ink-500/40 relative bg-ink shadow-[0_50px_120px_rgba(0,0,0,0.6)]">
+
+        <!-- NAV -->
+        <header class="relative z-50 border-b border-ink-500/40 sticky top-0 bg-ink/85 backdrop-blur-md nav-load">
+            <div class="flex justify-between items-center px-5 md:px-8 py-4">
+                <a href="#top" class="flex items-center gap-3 group">
+                    <svg class="w-9 h-9 spire-glow" viewBox="0 0 600 600"><use href="#atlasBuilding"/></svg>
+                    <div class="flex flex-col leading-none">
+                        <span class="font-display tracking-tight text-xl font-semibold text-paper">Build<span class="text-gold-400 italic">Atlas</span></span>
+                        <span class="text-[8px] font-mono uppercase tracking-[0.3em] text-ink-300 mt-1">Consultoria de Patrimônio</span>
+                    </div>
+                </a>
+                <nav class="hidden md:flex items-center gap-8">
+                    <a class="text-[11px] font-medium tracking-[0.15em] uppercase text-ink-100 hover:text-gold-300 transition-colors" href="#metodo">Método</a>
+                    <a class="text-[11px] font-medium tracking-[0.15em] uppercase text-ink-100 hover:text-gold-300 transition-colors" href="#consorcios">Consórcios</a>
+                    <a class="text-[11px] font-medium tracking-[0.15em] uppercase text-ink-100 hover:text-gold-300 transition-colors" href="#cases">Cases</a>
+                    <a class="text-[11px] font-medium tracking-[0.15em] uppercase text-ink-100 hover:text-gold-300 transition-colors" href="#faq">Dúvidas</a>
+                </nav>
+                <a href="#contato" class="bg-gold-400 text-ink-800 px-5 py-2.5 text-[11px] uppercase tracking-[0.18em] rounded-full hover:bg-gold-300 transition-all btn-beam font-bold flex items-center gap-2">
+                    Agendar Consultoria
+                    <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+                </a>
+            </div>
+        </header>
+
+        <!-- HERO -->
+        <section id="top" class="relative z-10 grid grid-cols-1 md:grid-cols-12 min-h-[92vh] overflow-hidden border-b border-ink-500/40 hero-bg">
+            <div class="absolute inset-0 grain pointer-events-none"></div>
+
+            <!-- Left: copy -->
+            <div class="md:col-span-7 relative z-10 p-8 md:p-14 flex flex-col justify-between border-r border-ink-500/30">
+                <div class="reveal delay-100">
+                    <span class="inline-flex items-center gap-2 px-4 py-2 border border-gold-400/60 bg-gold-400/5 backdrop-blur-md rounded-full text-[10px] font-mono uppercase text-gold-300 tracking-[0.25em]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse"></span>
+                        Especialistas em Consórcios · 2026
+                    </span>
+                </div>
+
+                <div class="space-y-8 mt-10">
+                    <h1 class="font-display font-semibold tracking-tighter text-paper leading-[0.88]" id="hero-title">
+                        <div class="text-reveal-wrapper">
+                            <span class="text-reveal-content text-6xl md:text-8xl block">Construa o</span>
+                        </div>
+                        <div class="text-reveal-wrapper">
+                            <span class="text-reveal-content delay-200 text-6xl md:text-8xl shimmer-gold italic block">patrimônio</span>
+                        </div>
+                        <div class="text-reveal-wrapper">
+                            <span class="text-reveal-content delay-300 text-6xl md:text-8xl block">que ficará.</span>
+                        </div>
+                    </h1>
+
+                    <div class="reveal delay-500 max-w-xl">
+                        <p class="text-lg md:text-xl text-ink-100 font-light leading-relaxed">
+                            Consultoria especializada em <strong class="text-gold-300 font-medium">construção de patrimônio via consórcios</strong>.
+                            Estruturamos cartas, montamos estratégias e contemplamos seus objetivos com método — não com sorte.
+                        </p>
+                    </div>
+
+                    <div class="reveal delay-700 flex flex-wrap gap-3 items-center">
+                        <a href="#contato" class="bg-gold-400 text-ink-800 px-7 py-3.5 rounded-full text-xs font-bold uppercase tracking-[0.2em] hover:bg-gold-300 transition-all btn-beam flex items-center gap-2">
+                            Falar com consultor
+                            <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+                        </a>
+                        <a href="#metodo" class="px-7 py-3.5 rounded-full text-xs font-bold uppercase tracking-[0.2em] text-paper border border-paper/30 hover:bg-paper/10 backdrop-blur-md transition-all">
+                            Como funciona
+                        </a>
+                    </div>
+                </div>
+
+                <!-- bottom kpi strip -->
+                <div class="reveal delay-700 mt-12 grid grid-cols-3 gap-6 pt-8 border-t border-ink-500/30">
+                    <div>
+                        <div class="text-3xl md:text-4xl font-display font-semibold text-gold-400 num-display">+R$ 480M</div>
+                        <div class="text-[10px] font-mono uppercase tracking-[0.25em] text-ink-200 mt-1">em cartas administradas</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl md:text-4xl font-display font-semibold text-gold-400 num-display">2.300<span class="text-gold-200">+</span></div>
+                        <div class="text-[10px] font-mono uppercase tracking-[0.25em] text-ink-200 mt-1">famílias contempladas</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl md:text-4xl font-display font-semibold text-gold-400 num-display">98<span class="text-gold-200">%</span></div>
+                        <div class="text-[10px] font-mono uppercase tracking-[0.25em] text-ink-200 mt-1">satisfação dos clientes</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: logo stage -->
+            <div class="md:col-span-5 relative flex items-center justify-center p-8 md:p-12 min-h-[60vh]">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square rounded-full bg-gold-400/10 blur-3xl"></div>
+
+                <div class="relative w-full max-w-[420px] reveal delay-200">
+                    <svg viewBox="0 0 600 600" class="w-full h-auto spire-glow">
+                        <use href="#atlasMark"/>
+                    </svg>
+                </div>
+
+                <div class="absolute top-6 left-6 text-[9px] font-mono text-gold-400/70 tracking-widest">EST · MMXXVI</div>
+                <div class="absolute top-6 right-6 text-[9px] font-mono text-gold-400/70 tracking-widest">№ 001</div>
+                <div class="absolute bottom-6 left-6 text-[9px] font-mono text-gold-400/70 tracking-widest">GRUPO · EXITHUS</div>
+                <div class="absolute bottom-6 right-6 text-[9px] font-mono text-gold-400/70 tracking-widest">CRECI · CV-AUTH</div>
+            </div>
+        </section>
+
+        <!-- ABOUT / GROUP -->
+        <section class="relative z-10 border-b border-ink-500/40 bg-ink-700">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-0">
+                <div class="md:col-span-5 p-8 md:p-14 border-b md:border-b-0 md:border-r border-ink-500/40">
+                    <span class="text-[10px] font-mono uppercase text-gold-400 block mb-4 tracking-[0.3em]">01 · Quem Somos</span>
+                    <h2 class="reveal text-4xl md:text-6xl font-display font-medium tracking-tight text-paper leading-[1.05]">
+                        Patrimônio se <span class="italic text-gold-300">ergue</span> — não acontece.
+                    </h2>
+                </div>
+                <div class="md:col-span-7 p-8 md:p-14 flex flex-col justify-center gap-6">
+                    <p class="reveal text-lg text-ink-100 leading-relaxed">
+                        A <strong class="text-gold-300">Build Atlas</strong> é a vertical de consultoria patrimonial do <strong>Grupo Exithus</strong>.
+                        Trabalhamos exclusivamente com <strong>consórcios</strong> — porque acreditamos que o caminho mais inteligente para construir
+                        patrimônio durável é o que combina disciplina, custo baixo e contemplação estratégica.
+                    </p>
+                    <p class="reveal delay-200 text-base text-ink-200 leading-relaxed">
+                        Nossos consultores estruturam o plano, escolhem a administradora certa, montam a melhor combinação de cartas
+                        e acompanham cada passo até a contemplação. Você foca no objetivo. Nós cuidamos da estrutura.
+                    </p>
+
+                    <div class="reveal delay-300 grid grid-cols-2 gap-4 pt-6 border-t border-ink-500/30 mt-4">
+                        <div class="flex items-start gap-3">
+                            <iconify-icon icon="solar:shield-check-bold-duotone" class="text-2xl text-gold-400 shrink-0 mt-0.5"></iconify-icon>
+                            <div>
+                                <div class="text-paper font-semibold text-sm">Regulamentado</div>
+                                <div class="text-xs text-ink-200">Operações conforme normas Bacen</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <iconify-icon icon="solar:diploma-verified-bold-duotone" class="text-2xl text-gold-400 shrink-0 mt-0.5"></iconify-icon>
+                            <div>
+                                <div class="text-paper font-semibold text-sm">Certificado</div>
+                                <div class="text-xs text-ink-200">Equipe ANCORD & CPA-20</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <iconify-icon icon="solar:graph-up-bold-duotone" class="text-2xl text-gold-400 shrink-0 mt-0.5"></iconify-icon>
+                            <div>
+                                <div class="text-paper font-semibold text-sm">Estratégico</div>
+                                <div class="text-xs text-ink-200">Lances calculados, não emocionais</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <iconify-icon icon="solar:hand-shake-bold-duotone" class="text-2xl text-gold-400 shrink-0 mt-0.5"></iconify-icon>
+                            <div>
+                                <div class="text-paper font-semibold text-sm">Acompanhado</div>
+                                <div class="text-xs text-ink-200">Consultor dedicado do início ao fim</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- METHOD / 4 STEPS -->
+        <section id="metodo" class="relative z-10 border-b border-ink-500/40 bg-ink">
+            <div class="p-8 md:p-14 border-b border-ink-500/40">
+                <span class="text-[10px] font-mono uppercase text-gold-400 block mb-2 tracking-[0.3em]">02 · Método</span>
+                <h2 class="text-4xl md:text-6xl font-display font-medium tracking-tight text-paper">O Método <span class="italic text-gold-300">Atlas</span>.</h2>
+                <p class="text-ink-100 mt-4 max-w-2xl">Quatro andares. Uma estrutura. Cada etapa sustenta a próxima — como um edifício.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-ink-500/40">
+                <!-- Step 1 -->
+                <div class="reveal p-8 md:p-10 relative group hover:bg-gold-400/5 transition-colors">
+                    <div class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400/70 mb-6">Andar 01</div>
+                    <iconify-icon icon="solar:radar-bold-duotone" class="text-4xl text-gold-400 mb-6 block"></iconify-icon>
+                    <h3 class="text-2xl font-display font-semibold text-paper mb-3">Diagnóstico</h3>
+                    <p class="text-sm text-ink-100 leading-relaxed">
+                        Mapeamos seu perfil, seus objetivos e seu horizonte. Quanto, quando, para quê — e por quê.
+                    </p>
+                    <div class="mt-6 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-gold-300">
+                        <span class="w-6 h-px bg-gold-400"></span> 30 minutos
+                    </div>
+                </div>
+                <!-- Step 2 -->
+                <div class="reveal delay-100 p-8 md:p-10 relative group hover:bg-gold-400/5 transition-colors">
+                    <div class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400/70 mb-6">Andar 02</div>
+                    <iconify-icon icon="solar:ruler-pen-bold-duotone" class="text-4xl text-gold-400 mb-6 block"></iconify-icon>
+                    <h3 class="text-2xl font-display font-semibold text-paper mb-3">Estrutura</h3>
+                    <p class="text-sm text-ink-100 leading-relaxed">
+                        Desenhamos o plano: combinação de cartas, prazos, taxas, administradoras. Tudo no papel — antes do primeiro real.
+                    </p>
+                    <div class="mt-6 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-gold-300">
+                        <span class="w-6 h-px bg-gold-400"></span> 7 dias
+                    </div>
+                </div>
+                <!-- Step 3 -->
+                <div class="reveal delay-200 p-8 md:p-10 relative group hover:bg-gold-400/5 transition-colors">
+                    <div class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400/70 mb-6">Andar 03</div>
+                    <iconify-icon icon="solar:buildings-2-bold-duotone" class="text-4xl text-gold-400 mb-6 block"></iconify-icon>
+                    <h3 class="text-2xl font-display font-semibold text-paper mb-3">Execução</h3>
+                    <p class="text-sm text-ink-100 leading-relaxed">
+                        Adesão, lances estratégicos e acompanhamento mensal. Você nunca está sozinho na assembleia.
+                    </p>
+                    <div class="mt-6 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-gold-300">
+                        <span class="w-6 h-px bg-gold-400"></span> contínuo
+                    </div>
+                </div>
+                <!-- Step 4 -->
+                <div class="reveal delay-300 p-8 md:p-10 relative group bg-gold-400/5 hover:bg-gold-400/10 transition-colors">
+                    <div class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 mb-6">Andar 04 · Topo</div>
+                    <iconify-icon icon="solar:cup-star-bold-duotone" class="text-4xl text-gold-300 mb-6 block spire-glow"></iconify-icon>
+                    <h3 class="text-2xl font-display font-semibold text-paper mb-3">Contemplação</h3>
+                    <p class="text-sm text-ink-100 leading-relaxed">
+                        Carta liberada. Assessoria na compra do bem, escritura, blindagem. O patrimônio toma forma.
+                    </p>
+                    <div class="mt-6 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-gold-300">
+                        <span class="w-6 h-px bg-gold-400"></span> objetivo realizado
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONSORTIUM PRODUCTS -->
+        <section id="consorcios" class="relative z-10 border-b border-ink-500/40 bg-ink-700">
+            <div class="p-8 md:p-14 border-b border-ink-500/40 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <span class="text-[10px] font-mono uppercase text-gold-400 block mb-2 tracking-[0.3em]">03 · Linhas</span>
+                    <h2 class="text-4xl md:text-6xl font-display font-medium tracking-tight text-paper">Linhas de <span class="italic text-gold-300">Consórcio</span></h2>
+                </div>
+                <p class="text-ink-100 max-w-md">Quatro frentes. Estrutura única. Escolha o andar, monte o edifício.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-ink-500/40">
+                <!-- Imóveis -->
+                <div class="p-8 md:p-12 group card-glow border-b md:border-b border-ink-500/40 hover:bg-gold-400/5 transition-colors">
+                    <div class="flex justify-between items-start mb-8">
+                        <iconify-icon icon="solar:buildings-3-bold-duotone" class="text-5xl text-gold-400"></iconify-icon>
+                        <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-300 border border-gold-400/40 px-3 py-1 rounded-full">Mais procurado</span>
+                    </div>
+                    <h3 class="text-3xl font-display font-semibold text-paper mb-3">Imóveis</h3>
+                    <p class="text-ink-100 mb-6">Da casa própria ao portfólio de aluguel. Cartas de R$ 100 mil a R$ 2 milhões, prazos até 240 meses.</p>
+                    <ul class="space-y-2 text-sm text-ink-100 mb-8">
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-circle-bold" class="text-gold-400"></iconify-icon> Sem juros — só taxa de administração</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-circle-bold" class="text-gold-400"></iconify-icon> Use FGTS no lance</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-circle-bold" class="text-gold-400"></iconify-icon> Imóvel novo, usado ou na planta</li>
+                    </ul>
+                    <div class="flex items-baseline justify-between pt-6 border-t border-ink-500/30">
+                        <div>
+                            <div class="text-[10px] font-mono uppercase tracking-widest text-ink-200">A partir de</div>
+                            <div class="text-3xl font-display font-semibold text-gold-400">R$ 580<span class="text-base text-ink-100">/mês</span></div>
+                        </div>
+                        <a href="#contato" class="text-gold-300 text-xs uppercase tracking-[0.2em] font-bold flex items-center gap-1 group-hover:gap-3 transition-all">
+                            Falar com consultor <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+                <!-- Veículos -->
+                <div class="p-8 md:p-12 group card-glow border-b md:border-b border-ink-500/40 hover:bg-gold-400/5 transition-colors">
+                    <div class="flex justify-between items-start mb-8">
+                        <iconify-icon icon="solar:car-2-bold-duotone" class="text-5xl text-gold-400"></iconify-icon>
+                        <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-ink-300 border border-ink-500/40 px-3 py-1 rounded-full">Liquidez rápida</span>
+                    </div>
+                    <h3 class="text-3xl font-display font-semibold text-paper mb-3">Veículos</h3>
+                    <p class="text-ink-100 mb-6">Carros, motos, caminhões e frotas. Cartas de R$ 30 mil a R$ 500 mil, prazos até 100 meses.</p>
+                    <ul class="space-y-2 text-sm text-ink-100 mb-8">
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-circle-bold" class="text-gold-400"></iconify-icon> Crédito flexível para qualquer marca</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-circle-bold" class="text-gold-400"></iconify-icon> Lance fixo a partir de 25%</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-circle-bold" class="text-gold-400"></iconify-icon> Use o saldo como entrada</li>
+                    </ul>
+                    <div class="flex items-baseline justify-between pt-6 border-t border-ink-500/30">
+                        <div>
+                            <div class="text-[10px] font-mono uppercase tracking-widest text-ink-200">A partir de</div>
+                            <div class="text-3xl font-display font-semibold text-gold-400">R$ 320<span class="text-base text-ink-100">/mês</span></div>
+                        </div>
+                        <a href="#contato" class="text-gold-300 text-xs uppercase tracking-[0.2em] font-bold flex items-center gap-1 group-hover:gap-3 transition-all">
+                            Falar com consultor <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+                <!-- Capital de Giro -->
+                <div class="p-8 md:p-12 group card-glow hover:bg-gold-400/5 transition-colors">
+                    <div class="flex justify-between items-start mb-8">
+                        <iconify-icon icon="solar:wallet-money-bold-duotone" class="text-5xl text-gold-400"></iconify-icon>
+                        <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-ink-300 border border-ink-500/40 px-3 py-1 rounded-full">PJ</span>
+                    </div>
+                    <h3 class="text-3xl font-display font-semibold text-paper mb-3">Capital de Giro</h3>
+                    <p class="text-ink-100 mb-6">Para empresas que precisam de fôlego financeiro sem comprometer o caixa hoje.</p>
+                    <ul class="space-y-2 text-sm text-ink-100 mb-8">
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-circle-bold" class="text-gold-400"></iconify-icon> Carta livre para qualquer uso</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-circle-bold" class="text-gold-400"></iconify-icon> Sem análise de garantia para entrada</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-circle-bold" class="text-gold-400"></iconify-icon> Dedutível no IR PJ</li>
+                    </ul>
+                    <div class="flex items-baseline justify-between pt-6 border-t border-ink-500/30">
+                        <div>
+                            <div class="text-[10px] font-mono uppercase tracking-widest text-ink-200">A partir de</div>
+                            <div class="text-3xl font-display font-semibold text-gold-400">R$ 450<span class="text-base text-ink-100">/mês</span></div>
+                        </div>
+                        <a href="#contato" class="text-gold-300 text-xs uppercase tracking-[0.2em] font-bold flex items-center gap-1 group-hover:gap-3 transition-all">
+                            Falar com consultor <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+                <!-- Reforma & Construção -->
+                <div class="p-8 md:p-12 group card-glow hover:bg-gold-400/5 transition-colors">
+                    <div class="flex justify-between items-start mb-8">
+                        <iconify-icon icon="solar:hammer-bold-duotone" class="text-5xl text-gold-400"></iconify-icon>
+                        <span class="text-[10px] font-mono uppercase tracking-[0.3em] text-ink-300 border border-ink-500/40 px-3 py-1 rounded-full">Novidade</span>
+                    </div>
+                    <h3 class="text-3xl font-display font-semibold text-paper mb-3">Reforma & Construção</h3>
+                    <p class="text-ink-100 mb-6">Crédito carimbado para tirar a obra do papel — material, mão de obra ou projeto completo.</p>
+                    <ul class="space-y-2 text-sm text-ink-100 mb-8">
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-circle-bold" class="text-gold-400"></iconify-icon> Liberação parcelada conforme cronograma</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-circle-bold" class="text-gold-400"></iconify-icon> Aceita terreno como lance</li>
+                        <li class="flex items-center gap-2"><iconify-icon icon="solar:check-circle-bold" class="text-gold-400"></iconify-icon> Acompanhamento de obra incluso</li>
+                    </ul>
+                    <div class="flex items-baseline justify-between pt-6 border-t border-ink-500/30">
+                        <div>
+                            <div class="text-[10px] font-mono uppercase tracking-widest text-ink-200">A partir de</div>
+                            <div class="text-3xl font-display font-semibold text-gold-400">R$ 380<span class="text-base text-ink-100">/mês</span></div>
+                        </div>
+                        <a href="#contato" class="text-gold-300 text-xs uppercase tracking-[0.2em] font-bold flex items-center gap-1 group-hover:gap-3 transition-all">
+                            Falar com consultor <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY US -->
+        <section class="relative z-10 border-b border-ink-500/40 bg-ink-700">
+            <div class="p-8 md:p-14 border-b border-ink-500/40">
+                <span class="text-[10px] font-mono uppercase text-gold-400 block mb-2 tracking-[0.3em]">05 · Diferença</span>
+                <h2 class="text-4xl md:text-6xl font-display font-medium tracking-tight text-paper">Por que <span class="italic text-gold-300">Build Atlas</span>?</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-ink-500/40">
+                <div class="p-8 md:p-10 flashlight" onmousemove="const r=this.getBoundingClientRect();this.style.setProperty('--mouse-x', (event.clientX-r.left)+'px');this.style.setProperty('--mouse-y', (event.clientY-r.top)+'px');">
+                    <iconify-icon icon="solar:strategy-bold-duotone" class="text-4xl text-gold-400 mb-6 block relative z-10"></iconify-icon>
+                    <h3 class="text-xl font-display font-semibold text-paper mb-3 relative z-10">Lances estratégicos</h3>
+                    <p class="text-sm text-ink-100 leading-relaxed relative z-10">
+                        Análise de assembleia, histórico do grupo e timing. Lance certo, no momento certo — não no chute.
+                    </p>
+                </div>
+                <div class="p-8 md:p-10 flashlight" onmousemove="const r=this.getBoundingClientRect();this.style.setProperty('--mouse-x', (event.clientX-r.left)+'px');this.style.setProperty('--mouse-y', (event.clientY-r.top)+'px');">
+                    <iconify-icon icon="solar:eye-bold-duotone" class="text-4xl text-gold-400 mb-6 block relative z-10"></iconify-icon>
+                    <h3 class="text-xl font-display font-semibold text-paper mb-3 relative z-10">Curadoria de administradoras</h3>
+                    <p class="text-sm text-ink-100 leading-relaxed relative z-10">
+                        Trabalhamos só com administradoras top-tier autorizadas pelo Bacen. Sem letras miúdas, sem surpresas.
+                    </p>
+                </div>
+                <div class="p-8 md:p-10 flashlight" onmousemove="const r=this.getBoundingClientRect();this.style.setProperty('--mouse-x', (event.clientX-r.left)+'px');this.style.setProperty('--mouse-y', (event.clientY-r.top)+'px');">
+                    <iconify-icon icon="solar:user-speak-bold-duotone" class="text-4xl text-gold-400 mb-6 block relative z-10"></iconify-icon>
+                    <h3 class="text-xl font-display font-semibold text-paper mb-3 relative z-10">Consultor dedicado</h3>
+                    <p class="text-sm text-ink-100 leading-relaxed relative z-10">
+                        Um nome, um número, um WhatsApp. Da assinatura à contemplação, mesma pessoa do seu lado.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMPARISON TABLE -->
+        <section class="relative z-10 border-b border-ink-500/40 bg-ink">
+            <div class="p-8 md:p-14 border-b border-ink-500/40">
+                <span class="text-[10px] font-mono uppercase text-gold-400 block mb-2 tracking-[0.3em]">06 · Comparativo</span>
+                <h2 class="text-4xl md:text-6xl font-display font-medium tracking-tight text-paper">Consórcio vs. <span class="italic text-gold-300">Financiamento</span>.</h2>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b border-ink-500/40 text-[10px] font-mono uppercase tracking-[0.3em] text-ink-200">
+                            <th class="p-6 md:p-8"></th>
+                            <th class="p-6 md:p-8 bg-gold-400/5"><span class="text-gold-300">Build Atlas · Consórcio</span></th>
+                            <th class="p-6 md:p-8">Financiamento bancário</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-ink-500/30 text-sm">
+                        <tr class="hover:bg-gold-400/5 transition-colors">
+                            <td class="p-6 md:p-8 text-ink-200 font-mono text-[11px] uppercase tracking-widest">Custo total</td>
+                            <td class="p-6 md:p-8 text-paper bg-gold-400/5 font-semibold">Apenas taxa adm. (~15-18% no total)</td>
+                            <td class="p-6 md:p-8 text-ink-100">Juros podem dobrar o valor (CET 80-130%)</td>
+                        </tr>
+                        <tr class="hover:bg-gold-400/5 transition-colors">
+                            <td class="p-6 md:p-8 text-ink-200 font-mono text-[11px] uppercase tracking-widest">Entrada</td>
+                            <td class="p-6 md:p-8 text-paper bg-gold-400/5 font-semibold">Não exige</td>
+                            <td class="p-6 md:p-8 text-ink-100">20% a 30% do bem</td>
+                        </tr>
+                        <tr class="hover:bg-gold-400/5 transition-colors">
+                            <td class="p-6 md:p-8 text-ink-200 font-mono text-[11px] uppercase tracking-widest">Score</td>
+                            <td class="p-6 md:p-8 text-paper bg-gold-400/5 font-semibold">Análise simplificada</td>
+                            <td class="p-6 md:p-8 text-ink-100">Crítica e restritiva</td>
+                        </tr>
+                        <tr class="hover:bg-gold-400/5 transition-colors">
+                            <td class="p-6 md:p-8 text-ink-200 font-mono text-[11px] uppercase tracking-widest">Lance / Antecipação</td>
+                            <td class="p-6 md:p-8 text-paper bg-gold-400/5 font-semibold">Lance acelera contemplação</td>
+                            <td class="p-6 md:p-8 text-ink-100">Amortizar custa caro</td>
+                        </tr>
+                        <tr class="hover:bg-gold-400/5 transition-colors">
+                            <td class="p-6 md:p-8 text-ink-200 font-mono text-[11px] uppercase tracking-widest">Para quem é</td>
+                            <td class="p-6 md:p-8 text-paper bg-gold-400/5 font-semibold">Quem planeja médio/longo prazo</td>
+                            <td class="p-6 md:p-8 text-ink-100">Quem precisa do bem AGORA</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- CASES / TESTIMONIALS -->
+        <section id="cases" class="relative z-10 border-b border-ink-500/40 bg-ink-700">
+            <div class="p-8 md:p-14 border-b border-ink-500/40">
+                <span class="text-[10px] font-mono uppercase text-gold-400 block mb-2 tracking-[0.3em]">07 · Quem construiu</span>
+                <h2 class="text-4xl md:text-6xl font-display font-medium tracking-tight text-paper">Histórias <span class="italic text-gold-300">contempladas</span>.</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-ink-500/40">
+                <article class="p-8 md:p-10 flex flex-col gap-6 hover:bg-gold-400/5 transition-colors">
+                    <iconify-icon icon="solar:quote-up-bold" class="text-3xl text-gold-400"></iconify-icon>
+                    <p class="text-paper text-lg font-display italic leading-snug">
+                        "Eram 14 meses até a contemplação. Com o lance que a Atlas estruturou, saí em 7. Hoje meu apê é meu."
+                    </p>
+                    <div class="mt-auto pt-6 border-t border-ink-500/30">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-gold-400/20 flex items-center justify-center text-gold-300 font-display text-xl font-semibold">M</div>
+                            <div>
+                                <div class="text-paper font-semibold text-sm">Mariana D.</div>
+                                <div class="text-[10px] font-mono uppercase tracking-widest text-ink-200">Carta · R$ 420K · Imóvel</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="p-8 md:p-10 flex flex-col gap-6 hover:bg-gold-400/5 transition-colors bg-gold-400/5">
+                    <iconify-icon icon="solar:quote-up-bold" class="text-3xl text-gold-400"></iconify-icon>
+                    <p class="text-paper text-lg font-display italic leading-snug">
+                        "Pra renovar a frota da empresa eu queria evitar o banco. Atlas montou 5 cartas combinadas — economizei R$ 380 mil em juros."
+                    </p>
+                    <div class="mt-auto pt-6 border-t border-ink-500/30">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-gold-400/20 flex items-center justify-center text-gold-300 font-display text-xl font-semibold">R</div>
+                            <div>
+                                <div class="text-paper font-semibold text-sm">Ricardo P.</div>
+                                <div class="text-[10px] font-mono uppercase tracking-widest text-ink-200">5 cartas · R$ 1.2M · Frota</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="p-8 md:p-10 flex flex-col gap-6 hover:bg-gold-400/5 transition-colors">
+                    <iconify-icon icon="solar:quote-up-bold" class="text-3xl text-gold-400"></iconify-icon>
+                    <p class="text-paper text-lg font-display italic leading-snug">
+                        "Comecei sem entender nada. Em 6 meses entendi mais de patrimônio do que em 10 anos de salário."
+                    </p>
+                    <div class="mt-auto pt-6 border-t border-ink-500/30">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-gold-400/20 flex items-center justify-center text-gold-300 font-display text-xl font-semibold">A</div>
+                            <div>
+                                <div class="text-paper font-semibold text-sm">André L.</div>
+                                <div class="text-[10px] font-mono uppercase tracking-widest text-ink-200">Carta · R$ 180K · 1ª casa</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="relative z-10 border-b border-ink-500/40 bg-ink">
+            <div class="p-8 md:p-14 border-b border-ink-500/40">
+                <span class="text-[10px] font-mono uppercase text-gold-400 block mb-2 tracking-[0.3em]">08 · Dúvidas frequentes</span>
+                <h2 class="text-4xl md:text-6xl font-display font-medium tracking-tight text-paper">Perguntas <span class="italic text-gold-300">honestas</span>.</h2>
+            </div>
+
+            <div class="divide-y divide-ink-500/40">
+                <details class="group p-8 md:p-10 hover:bg-gold-400/5 transition-colors">
+                    <summary class="flex items-center justify-between gap-6">
+                        <h3 class="text-xl md:text-2xl font-display font-medium text-paper">Consórcio é seguro?</h3>
+                        <iconify-icon icon="solar:add-circle-linear" class="text-2xl text-gold-400 faq-icon shrink-0"></iconify-icon>
+                    </summary>
+                    <p class="mt-4 text-ink-100 leading-relaxed max-w-3xl">
+                        Sim. As administradoras com as quais trabalhamos são autorizadas e fiscalizadas pelo Banco Central.
+                        Os recursos do grupo ficam em conta segregada — sua contribuição é protegida do risco operacional da administradora.
+                    </p>
+                </details>
+                <details class="group p-8 md:p-10 hover:bg-gold-400/5 transition-colors">
+                    <summary class="flex items-center justify-between gap-6">
+                        <h3 class="text-xl md:text-2xl font-display font-medium text-paper">E se eu não for contemplado nos primeiros meses?</h3>
+                        <iconify-icon icon="solar:add-circle-linear" class="text-2xl text-gold-400 faq-icon shrink-0"></iconify-icon>
+                    </summary>
+                    <p class="mt-4 text-ink-100 leading-relaxed max-w-3xl">
+                        Construímos a estratégia justamente para reduzir esse risco. Combinamos lance fixo, lance livre e timing de assembleia.
+                        Em casos onde a velocidade é crítica, montamos múltiplas cartas para diversificar contemplação.
+                    </p>
+                </details>
+                <details class="group p-8 md:p-10 hover:bg-gold-400/5 transition-colors">
+                    <summary class="flex items-center justify-between gap-6">
+                        <h3 class="text-xl md:text-2xl font-display font-medium text-paper">Posso usar FGTS?</h3>
+                        <iconify-icon icon="solar:add-circle-linear" class="text-2xl text-gold-400 faq-icon shrink-0"></iconify-icon>
+                    </summary>
+                    <p class="mt-4 text-ink-100 leading-relaxed max-w-3xl">
+                        Sim, em consórcio de imóvel. O FGTS pode ser usado no lance, na quitação parcial ou na complementação da carta na hora da compra do imóvel.
+                    </p>
+                </details>
+                <details class="group p-8 md:p-10 hover:bg-gold-400/5 transition-colors">
+                    <summary class="flex items-center justify-between gap-6">
+                        <h3 class="text-xl md:text-2xl font-display font-medium text-paper">Qual a diferença da Build Atlas para uma administradora?</h3>
+                        <iconify-icon icon="solar:add-circle-linear" class="text-2xl text-gold-400 faq-icon shrink-0"></iconify-icon>
+                    </summary>
+                    <p class="mt-4 text-ink-100 leading-relaxed max-w-3xl">
+                        A administradora gere o grupo. Nós somos seus consultores — independentes. Comparamos administradoras, escolhemos a melhor para o seu objetivo
+                        e construímos a estratégia de lance. Você passa a olhar o consórcio como um produto financeiro, não como sorteio.
+                    </p>
+                </details>
+                <details class="group p-8 md:p-10 hover:bg-gold-400/5 transition-colors">
+                    <summary class="flex items-center justify-between gap-6">
+                        <h3 class="text-xl md:text-2xl font-display font-medium text-paper">Quanto custa a consultoria?</h3>
+                        <iconify-icon icon="solar:add-circle-linear" class="text-2xl text-gold-400 faq-icon shrink-0"></iconify-icon>
+                    </summary>
+                    <p class="mt-4 text-ink-100 leading-relaxed max-w-3xl">
+                        A primeira reunião de diagnóstico é gratuita. Para clientes que avançam, nossa remuneração vem da administradora — sem custo adicional para você.
+                        Para estratégias customizadas (PJ, multi-cartas, blindagem), apresentamos uma proposta clara antes do início.
+                    </p>
+                </details>
+            </div>
+        </section>
+
+        <!-- CTA / CONTACT -->
+        <section id="contato" class="relative z-10 border-b border-ink-500/40 overflow-hidden">
+            <div class="absolute inset-0 hero-bg"></div>
+            <div class="absolute inset-0 grain pointer-events-none"></div>
+
+            <div class="relative grid grid-cols-1 md:grid-cols-12 gap-0">
+                <div class="md:col-span-6 p-8 md:p-16 border-b md:border-b-0 md:border-r border-ink-500/40">
+                    <span class="text-[10px] font-mono uppercase text-gold-400 block mb-4 tracking-[0.3em]">09 · Comece</span>
+                    <h2 class="text-4xl md:text-6xl font-display font-medium tracking-tight text-paper leading-[0.95]">
+                        Tudo grande começa com<br>
+                        <span class="italic shimmer-gold">o primeiro andar.</span>
+                    </h2>
+                    <p class="text-ink-100 mt-6 max-w-md leading-relaxed">
+                        Agende 30 minutos. Sem compromisso. Sai com diagnóstico, simulação e clareza.
+                    </p>
+
+                    <div class="mt-10 space-y-5">
+                        <a href="#" data-c="wa" class="flex items-center gap-4 group">
+                            <div class="w-12 h-12 rounded-full bg-gold-400/10 border border-gold-400/40 flex items-center justify-center group-hover:bg-gold-400 group-hover:text-ink-800 transition-all text-gold-400">
+                                <iconify-icon icon="solar:phone-bold" class="text-xl"></iconify-icon>
+                            </div>
+                            <div>
+                                <div class="text-[10px] font-mono uppercase tracking-widest text-ink-200">WhatsApp</div>
+                                <div class="text-paper font-semibold"><span data-c="phone">carregando…</span></div>
+                            </div>
+                        </a>
+                        <a href="mailto:contato@buildatlas.com.br" class="flex items-center gap-4 group">
+                            <div class="w-12 h-12 rounded-full bg-gold-400/10 border border-gold-400/40 flex items-center justify-center group-hover:bg-gold-400 group-hover:text-ink-800 transition-all text-gold-400">
+                                <iconify-icon icon="solar:letter-bold" class="text-xl"></iconify-icon>
+                            </div>
+                            <div>
+                                <div class="text-[10px] font-mono uppercase tracking-widest text-ink-200">E-mail</div>
+                                <div class="text-paper font-semibold">contato@buildatlas.com.br</div>
+                            </div>
+                        </a>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-gold-400/10 border border-gold-400/40 flex items-center justify-center text-gold-400">
+                                <iconify-icon icon="solar:map-point-bold" class="text-xl"></iconify-icon>
+                            </div>
+                            <div>
+                                <div class="text-[10px] font-mono uppercase tracking-widest text-ink-200">Sede</div>
+                                <div class="text-paper font-semibold"><span data-c="addr">carregando…</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-6 p-8 md:p-16 bg-ink-800/60 backdrop-blur">
+                    <form class="space-y-6" onsubmit="event.preventDefault(); alert('Solicitação enviada — um consultor falará com você em até 1h útil.');">
+                        <div>
+                            <label class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 block mb-2">Nome completo</label>
+                            <input type="text" required class="w-full bg-transparent border-b border-ink-300/40 py-3 text-paper placeholder-ink-300 focus:outline-none focus:border-gold-400 transition-colors" placeholder="Seu nome"/>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 block mb-2">E-mail</label>
+                                <input type="email" required class="w-full bg-transparent border-b border-ink-300/40 py-3 text-paper placeholder-ink-300 focus:outline-none focus:border-gold-400 transition-colors" placeholder="voce@email.com"/>
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 block mb-2">WhatsApp</label>
+                                <input type="tel" required class="w-full bg-transparent border-b border-ink-300/40 py-3 text-paper placeholder-ink-300 focus:outline-none focus:border-gold-400 transition-colors" placeholder="(92) 90000-0000"/>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 block mb-2">Objetivo</label>
+                            <select required class="w-full bg-transparent border-b border-ink-300/40 py-3 text-paper focus:outline-none focus:border-gold-400 transition-colors">
+                                <option class="bg-ink-800">Selecione...</option>
+                                <option class="bg-ink-800">Comprar imóvel</option>
+                                <option class="bg-ink-800">Comprar veículo</option>
+                                <option class="bg-ink-800">Capital de giro PJ</option>
+                                <option class="bg-ink-800">Reforma / Construção</option>
+                                <option class="bg-ink-800">Investimento patrimonial</option>
+                                <option class="bg-ink-800">Outro</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 block mb-2">Mensagem (opcional)</label>
+                            <textarea rows="3" class="w-full bg-transparent border-b border-ink-300/40 py-3 text-paper placeholder-ink-300 focus:outline-none focus:border-gold-400 transition-colors resize-none" placeholder="Quanto, quando, para quê..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-gold-400 text-ink-800 px-6 py-4 rounded-full text-xs font-bold uppercase tracking-[0.2em] hover:bg-gold-300 transition-all btn-beam mt-4">
+                            Agendar consultoria gratuita
+                        </button>
+                        <p class="text-[10px] font-mono uppercase tracking-widest text-ink-300 text-center">
+                            Resposta em até 1h útil. Seus dados são protegidos pela LGPD.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-ink-900 text-paper py-16 px-8 md:px-14 relative overflow-hidden">
+            <div class="absolute inset-0 grain pointer-events-none"></div>
+            <div class="gold-rule mb-12 relative z-10"></div>
+
+            <div class="relative z-10 grid grid-cols-2 md:grid-cols-12 gap-10">
+                <div class="col-span-2 md:col-span-4">
+                    <div class="flex items-center gap-3 mb-4">
+                        <svg class="w-10 h-10 spire-glow" viewBox="0 0 600 600"><use href="#atlasBuilding"/></svg>
+                        <span class="font-display tracking-tight text-2xl font-semibold">Build<span class="text-gold-400 italic">Atlas</span></span>
+                    </div>
+                    <p class="text-ink-200 text-sm leading-relaxed mb-6">
+                        Consultoria especializada em construção de patrimônio através de consórcios.
+                    </p>
+                    <p class="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-400">
+                        Empresa do Grupo Exithus
+                    </p>
+                </div>
+
+                <div class="md:col-span-2">
+                    <div class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 mb-4">Navegação</div>
+                    <ul class="space-y-2 text-sm text-ink-100">
+                        <li><a href="#metodo" class="hover:text-gold-300 transition-colors">Método</a></li>
+                        <li><a href="#consorcios" class="hover:text-gold-300 transition-colors">Consórcios</a></li>
+                        <li><a href="#cases" class="hover:text-gold-300 transition-colors">Cases</a></li>
+                        <li><a href="#faq" class="hover:text-gold-300 transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-3">
+                    <div class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 mb-4">Linhas</div>
+                    <ul class="space-y-2 text-sm text-ink-100">
+                        <li><a href="#consorcios" class="hover:text-gold-300 transition-colors">Imóveis</a></li>
+                        <li><a href="#consorcios" class="hover:text-gold-300 transition-colors">Veículos</a></li>
+                        <li><a href="#consorcios" class="hover:text-gold-300 transition-colors">Capital de Giro PJ</a></li>
+                        <li><a href="#consorcios" class="hover:text-gold-300 transition-colors">Reforma & Construção</a></li>
+                    </ul>
+                </div>
+
+                <div class="md:col-span-3">
+                    <div class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 mb-4">Contato</div>
+                    <ul class="space-y-2 text-sm text-ink-100">
+                        <li>contato@buildatlas.com.br</li>
+                        <li><span data-c="phone">carregando…</span></li>
+                        <li><span data-c="addr-short">carregando…</span></li>
+                    </ul>
+                    <div class="flex gap-3 mt-5">
+                        <a href="#" class="w-9 h-9 rounded-full border border-ink-500/60 flex items-center justify-center text-ink-200 hover:border-gold-400 hover:text-gold-400 transition-all">
+                            <iconify-icon icon="mdi:instagram"></iconify-icon>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-ink-500/60 flex items-center justify-center text-ink-200 hover:border-gold-400 hover:text-gold-400 transition-all">
+                            <iconify-icon icon="mdi:linkedin"></iconify-icon>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-ink-500/60 flex items-center justify-center text-ink-200 hover:border-gold-400 hover:text-gold-400 transition-all">
+                            <iconify-icon icon="mdi:youtube"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gold-rule mt-12 relative z-10"></div>
+            <div class="relative z-10 mt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] font-mono uppercase tracking-[0.25em] text-ink-300">
+                <div>© MMXXVI · Build Atlas Consultoria · CNPJ 00.000.000/0001-00</div>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-gold-300">Política de Privacidade</a>
+                    <a href="#" class="hover:text-gold-300">Termos de Uso</a>
+                    <a href="#" class="hover:text-gold-300">LGPD</a>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- JS -->
+    <script src="js/main.js" defer></script>
+    <script src="js/contact.js" defer></script>
+</body>
+</html>
