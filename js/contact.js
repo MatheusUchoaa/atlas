@@ -8,7 +8,7 @@
 //   conseguem — não existe defesa absoluta.
 //
 // Como editar seus dados:
-//   1. Pegue a string nova (ex: "(92) 99123-0239")
+//   1. Pegue a string nova (ex: "(92) 99137-6960")
 //   2. Codifique em base64. Em qualquer terminal:
 //        echo -n "seu texto" | base64
 //      Ou em https://www.base64encode.org
@@ -25,13 +25,13 @@
 (function () {
   // ─── EDITE AQUI se mudar telefone/endereço ──────────────────────
   // Valores em texto puro:
-  //   phone     : "(92) 99123-0239"
-  //   phone_intl: "5592991230239"  (formato wa.me, só dígitos com 55)
+  //   phone     : "(92) 99137-6960"
+  //   phone_intl: "5592991376960"  (formato wa.me, só dígitos com 55)
   //   address   : "Av. Urucará, 828 · Ed. Maran · Cachoeirinha · Manaus, AM"
   //   address_short: "Manaus · AM"
   var DATA = {
-    phone:        'KDkyKSA5OTEyMy0wMjM5',
-    phone_intl:   'NTU5Mjk5MTIzMDIzOQ==',
+    phone:        'KDkyKSA5OTEzNy02OTYw',
+    phone_intl:   'NTU5Mjk5MTM3Njk2MA==',
     address:      'QXYuIFVydWNhcsOhLCA4MjggwrcgRWQuIE1hcmFuIMK3IENhY2hvZWlyaW5oYSDCtyBNYW5hdXMsIEFN',
     address_short:'TWFuYXVzIMK3IEFN'
   };
