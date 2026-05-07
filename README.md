@@ -1,72 +1,56 @@
 # Build Atlas — Landing Page
 
-Landing page institucional da Build Atlas (Grupo Exithus).
+Site institucional da Build Atlas (Grupo Exithus). Página estática, sem
+backend, hospedável em qualquer serviço de arquivos estáticos.
+
+## Stack
+
+HTML + Tailwind (Play CDN) + JS vanilla. Sem build step.
 
 ## Estrutura
 
 ```
 build-atlas/
-├── index.html          ← markup principal
+├── index.html
 ├── css/
-│   └── styles.css      ← estilos customizados (modos, animações, glow)
+│   └── styles.css
 ├── js/
-│   ├── main.js         ← animações de entrada (reveal, nav-load)
-│   └── contact.js      ← obfuscação dos dados de contato
+│   ├── main.js
+│   ├── contact.js
+│   └── form.js
 └── README.md
 ```
 
-## Como rodar
+## Rodando localmente
 
-Abra `index.html` no navegador. Funciona standalone — só precisa de
-internet (CDNs do Tailwind, React e Iconify).
-
-Para rodar com servidor local (recomendado para evitar bloqueios CORS
-em alguns navegadores):
+Abra `index.html` direto no navegador, ou suba um servidor estático:
 
 ```bash
-# Python 3
 python3 -m http.server 8000
-
-# ou Node
+# ou
 npx serve .
 ```
 
-E acesse `http://localhost:8000`.
+## Manutenção
 
-## Editar conteúdo de contato
+Os arquivos em `js/` têm comentários no topo explicando o que cada um
+faz e como editar. Em geral:
 
-Os dados de telefone e endereço estão **codificados em base64** no
-arquivo `js/contact.js` para reduzir spam de bots.
+- **Textos da página** → `index.html` (em PT-BR, na ordem em que aparecem).
+- **Cores, animações, modos visuais** → `css/styles.css` e o bloco
+  `tailwind.config` no `<head>` do `index.html`.
+- **Dados de contato** (telefone, endereço, WhatsApp) → `js/contact.js`.
+  Os valores ficam codificados para reduzir raspagem por bots; siga as
+  instruções no cabeçalho do arquivo para trocar.
+- **Formulário "Agendar consultoria"** → `js/form.js`. Não envia para
+  servidor: monta uma mensagem e abre o WhatsApp do consultor em nova
+  aba. O número é o mesmo configurado em `contact.js` (fonte única).
 
-Para alterar, abra `js/contact.js` e siga as instruções no comentário
-do início do arquivo. Em resumo:
+## Dependências (via CDN)
 
-```bash
-echo -n "(92) 99123-0239" | base64
-# → KDkyKSA5OTEyMy0wMjM5
-```
+Tailwind CSS · Iconify · Google Fonts (Playfair Display, Inter,
+JetBrains Mono, Space Grotesk).
 
-Cole o resultado no campo correspondente do objeto `DATA`.
+## Licença
 
-## Editar textos da página
-
-Tudo está em `index.html` em português, na ordem em que aparece na
-tela. Procure pela seção (ex: "FAQ", "MÉTODO", "CONSORCIOS") via
-comentários HTML.
-
-## Editar paleta / estilos
-
-`css/styles.css` controla todas as customizações além do Tailwind:
-- variáveis `:root` (cores principais)
-- modos (`mood-noir`, `mood-daylight`, `mood-blueprint`)
-- animações (`reveal`, `marquee`, `shimmer`, `flashlight`)
-
-As cores `ink-*` e `gold-*` do Tailwind estão definidas inline no
-`<head>` do `index.html`, dentro da config do `tailwind`.
-
-## Dependências (CDN)
-
-- Tailwind CSS (Play CDN)
-- React 18.3.1 + ReactDOM (não usado por enquanto, herdado do design)
-- Iconify (ícones SVG)
-- Google Fonts: Playfair Display, Inter, JetBrains Mono, Space Grotesk
+Proprietário — Grupo Exithus. Uso interno.
