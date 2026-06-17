@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport" />
+    <title>Build Atlas — Agende sua Consultoria de Patrimônio</title>
+    <meta name="description" content="Agende uma consultoria gratuita de 30 minutos. Estruturamos cartas de consórcio para imóveis, veículos, empresa e investimento. Manaus/AM · Grupo Exithus." />
+    <meta name="theme-color" content="#0C0B09" />
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="apple-touch-icon" href="../favicon.svg" />
+    <link rel="canonical" href="https://buildatlas.com.br/lp/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Build Atlas — Agende sua Consultoria de Patrimônio" />
+    <meta property="og:description" content="Consultoria gratuita de 30 minutos. Diagnóstico, simulação e clareza para construir patrimônio via consórcio." />
+    <meta property="og:image" content="../favicon.svg" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Build Atlas" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        ink: {
+                            50: '#F4F2EC', 100: '#E6E2D6', 200: '#BFB9A8', 300: '#8C8472',
+                            400: '#4A4538', 500: '#2A2620', 600: '#1C1A16', 700: '#13110E',
+                            800: '#0C0B09', 900: '#060604',
+                        },
+                        gold: {
+                            50: '#FBF3DC', 100: '#F4E2A8', 200: '#EFC36A', 300: '#E8B855',
+                            400: '#D9A441', 500: '#C9962F', 600: '#B8862E', 700: '#8E6722',
+                            800: '#5E4516', 900: '#33260C',
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --gold: #D9A441; --gold-bright: #EFC36A; --gold-deep: #B8862E;
+            --ink: #0C0B09; --ink-2: #13110E; --paper: #F4F2EC;
+            --green: #25D366;
+        }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--ink);
+            color: var(--paper);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .text-paper { color: var(--paper); }
+
+        /* ---- entrada / reveal ---- */
+        .reveal { opacity: 0; transform: translateY(1.5rem); transition: all .9s cubic-bezier(0.16,1,0.3,1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .delay-100 { transition-delay: .1s; }
+        .delay-200 { transition-delay: .2s; }
+        .delay-300 { transition-delay: .3s; }
+        .delay-500 { transition-delay: .5s; }
+        .nav-load { opacity: 0; transform: translateY(-10px); transition: all .8s ease-out; }
+        .nav-load.loaded { opacity: 1; transform: translateY(0); }
+
+        /* ---- botões ---- */
+        .btn-beam { position: relative; overflow: hidden; }
+        .btn-beam::before {
+            content: ""; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,225,160,0.45), transparent);
+            transition: left .6s;
+        }
+        .btn-beam:hover::before { left: 100%; }
+        .btn-beam:active { transform: scale(.985); }
+
+        /* ---- texto shimmer dourado ---- */
+        .shimmer-gold {
+            background: linear-gradient(90deg, #8E6722 0%, #EFC36A 30%, #FBF3DC 50%, #EFC36A 70%, #8E6722 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text; background-clip: text;
+            animation: shimmer 5s linear infinite;
+        }
+        @keyframes shimmer { from { background-position: 0 0; } to { background-position: -200% 0; } }
+
+        /* ---- fundos ---- */
+        .hero-bg {
+            background:
+                radial-gradient(ellipse at 70% 0%, rgba(217,164,65,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 20% 80%, rgba(217,164,65,0.08) 0%, transparent 50%),
+                linear-gradient(180deg, #0C0B09 0%, #060604 100%);
+        }
+        .grain {
+            position: absolute; inset: 0; pointer-events: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+            opacity: 0.18; mix-blend-mode: overlay;
+        }
+        .spire-glow { filter: drop-shadow(0 0 18px rgba(239,195,106,0.55)); }
+        .gold-rule {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #B8862E 20%, #EFC36A 50%, #B8862E 80%, transparent);
+        }
+        ::selection { background: var(--gold); color: #0C0B09; }
+        .num-display { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+
+        /* ---- form ---- */
+        .fld input, .fld select, .fld textarea {
+            width: 100%; background: transparent;
+            border: none; border-bottom: 1px solid rgba(140,132,114,.4);
+            padding: 12px 0; color: var(--paper); font-size: 16px;
+            outline: none; transition: border-color .2s; font-family: inherit;
+        }
+        .fld input::placeholder, .fld textarea::placeholder { color: #8C8472; }
+        .fld input:focus, .fld select:focus, .fld textarea:focus { border-color: var(--gold); }
+        .fld select option { background: #0C0B09; }
+
+        .fstep { display: none; animation: fade .3s ease; }
+        .fstep.show { display: block; }
+        @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+        .chips { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .opt {
+            text-align: left; background: rgba(30,28,22,.6);
+            border: 1px solid rgba(140,132,114,.3); border-radius: 14px;
+            padding: 15px 13px; color: var(--paper); font-weight: 600; font-size: 14px;
+            display: flex; align-items: center; gap: 10px; cursor: pointer;
+            transition: all .15s; line-height: 1.25;
+        }
+        .opt:active { transform: scale(.97); }
+        .opt.sel { border-color: var(--gold); background: linear-gradient(180deg, rgba(217,164,65,.14), transparent); }
+        .opt iconify-icon { color: var(--gold); font-size: 20px; flex: 0 0 auto; }
+        .opt .e { color: var(--gold); font-weight: 800; flex: 0 0 auto; }
+
+        .prog { display: flex; gap: 6px; }
+        .prog .b { flex: 1; height: 4px; border-radius: 999px; background: rgba(140,132,114,.25); transition: background .3s; }
+        .prog .b.on { background: var(--gold); }
+
+        .err { color: #D98A6A; font-size: 12px; margin-top: 8px; display: none; }
+        .err.show { display: block; }
+
+        /* sucesso */
+        .ck {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: rgba(91,191,138,.15); border: 1px solid #5BBF8A;
+            display: grid; place-items: center; margin: 0 auto 18px;
+        }
+        .ck iconify-icon { font-size: 34px; color: #5BBF8A; }
+
+        /* método — andares */
+        .step {
+            background: rgba(30,28,22,.5); border: 1px solid rgba(140,132,114,.3);
+            border-radius: 16px; padding: 20px; position: relative; overflow: hidden;
+        }
+        .step .num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); font-weight: 600; letter-spacing: .25em; text-transform: uppercase; }
+        .step h4 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; margin: 8px 0 6px; color: var(--paper); }
+        .step p { font-size: 13.5px; color: #BFB9A8; line-height: 1.5; }
+        .step .tag { display: inline-block; margin-top: 12px; font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--gold-bright); text-transform: uppercase; letter-spacing: .12em; border: 1px solid rgba(140,132,114,.35); padding: 4px 10px; border-radius: 999px; }
+
+        /* depoimentos */
+        .tcards { display: flex; gap: 12px; overflow-x: auto; margin: 0 -20px; padding: 4px 20px 12px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .tcards::-webkit-scrollbar { display: none; }
+        .tcard { flex: 0 0 84%; scroll-snap-align: start; background: rgba(30,28,22,.5); border: 1px solid rgba(140,132,114,.3); border-radius: 16px; padding: 20px; }
+        .tcard p.quote { font-size: 14px; color: var(--paper); line-height: 1.55; margin-bottom: 16px; }
+        .tcard p.quote b { color: var(--gold-bright); font-weight: 700; }
+        .tcard .who { display: flex; align-items: center; gap: 12px; }
+        .av { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), #7a5f25); display: grid; place-items: center; font-weight: 800; color: #1a1407; flex: 0 0 auto; font-family: 'Playfair Display', serif; }
+        .who .nm { font-size: 13px; font-weight: 700; color: var(--paper); }
+        .who .meta { font-size: 11px; color: #8C8472; font-family: 'JetBrains Mono', monospace; }
+        .verif { font-size: 10.5px; color: #5BBF8A; display: inline-flex; align-items: center; gap: 4px; margin-top: 3px; }
+
+        /* comparativo Atlas vs banco */
+        .vs { display: grid; gap: 12px; }
+        .vscard { border-radius: 16px; padding: 20px; border: 1px solid rgba(140,132,114,.3); }
+        .vscard.atlas { background: linear-gradient(180deg, rgba(217,164,65,.10), rgba(30,28,22,.5)); border-color: rgba(217,164,65,.45); }
+        .vscard.bank { background: rgba(30,28,22,.45); }
+        .vscard .vh { display: flex; align-items: center; gap: 9px; font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 600; color: var(--paper); margin-bottom: 14px; }
+        .vscard .vh iconify-icon { font-size: 22px; }
+        .vscard.atlas .vh iconify-icon { color: var(--gold); }
+        .vscard.bank .vh iconify-icon { color: #8C8472; }
+        .vslist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .vslist li { display: flex; gap: 10px; font-size: 13.5px; line-height: 1.4; color: #BFB9A8; }
+        .vslist li b { color: var(--paper); font-weight: 700; }
+        .vslist .mk { flex: 0 0 auto; font-size: 16px; line-height: 1.3; }
+        .vscard.atlas .mk { color: #5BBF8A; }
+        .vscard.bank .mk { color: #D98A6A; }
+
+        /* selos de compliance */
+        .trust { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .trust .seal {
+            display: inline-flex; align-items: center; gap: 7px;
+            background: rgba(30,28,22,.6); border: 1px solid rgba(140,132,114,.3);
+            border-radius: 999px; padding: 8px 14px;
+            font-size: 12px; font-weight: 600; color: var(--paper); white-space: nowrap;
+        }
+        .trust .seal .dot { width: 7px; height: 7px; border-radius: 50%; background: #5BBF8A; flex: 0 0 auto; box-shadow: 0 0 8px rgba(91,191,138,.6); }
+
+        /* ===================== LAYOUT MOBILE (padrão) ===================== */
+        .lp-main { max-width: 520px; }
+
+        /* ===================== LAYOUT DESKTOP ===================== */
+        @media (min-width: 1024px) {
+            .lp-main {
+                max-width: 1180px;
+                display: grid;
+                grid-template-columns: 1fr 460px;
+                gap: 64px;
+                align-items: start;
+                padding-left: 40px; padding-right: 40px;
+            }
+            /* coluna esquerda: hero + depoimentos + comparativo + método (empilhados) */
+            .lp-hero  { grid-column: 1; padding-top: 64px; }
+            .lp-aside { grid-column: 1; }
+            /* coluna direita: formulário fixo, acompanha toda a coluna esquerda (4 seções) */
+            .lp-form {
+                grid-column: 2;
+                grid-row: 1 / span 4;
+                position: sticky;
+                top: 88px;
+                padding-top: 64px;
+                align-self: start;
+            }
+            /* hero maior no desktop */
+            .lp-hero h1 .block { font-size: 4.5rem; }
+            .lp-hero p { font-size: 1.075rem; max-width: 30rem; }
+            .lp-hero .grid { max-width: 30rem; }
+            /* depoimentos: cards lado a lado, sem scroll horizontal */
+            .lp-aside .tcards { margin: 0; padding: 4px 0 12px; }
+            .lp-aside .tcard { flex: 0 0 calc(50% - 6px); }
+            .lp-aside .tcards + p { display: none; } /* esconde "arraste para ver mais" no desktop */
+            /* método em 2 colunas */
+            .lp-aside .grid.gap-3 { grid-template-columns: 1fr 1fr; }
+            /* comparativo lado a lado no desktop */
+            .lp-aside .vs { grid-template-columns: 1fr 1fr; }
+            /* esconde o CTA "quero meu diagnóstico" no desktop (form já está à vista) */
+            .lp-aside a[href="#form"] { display: none; }
+        }
+        @media (min-width: 1024px) and (max-width: 1140px) {
+            .lp-main { grid-template-columns: 1fr 420px; gap: 40px; }
+            .lp-hero h1 .block { font-size: 3.75rem; }
+        }
+    </style>
+</head>
+
+<body class="antialiased min-h-screen">
+
+    <!-- símbolos SVG reaproveitados do site -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+            <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#FBF3DC"/>
+                <stop offset="35%" stop-color="#EFC36A"/>
+                <stop offset="70%" stop-color="#D9A441"/>
+                <stop offset="100%" stop-color="#8E6722"/>
+            </linearGradient>
+            <symbol id="atlasBuilding" viewBox="0 0 600 600">
+                <g fill="url(#goldGrad)">
+                    <rect x="298.5" y="118" width="3" height="46"/>
+                    <rect x="294" y="135" width="12" height="8"/>
+                    <polygon points="288,148 312,148 308,158 292,158"/>
+                    <rect x="284" y="160" width="32" height="10"/>
+                    <polygon points="280,172 320,172 316,182 284,182"/>
+                    <rect x="278" y="184" width="44" height="46"/>
+                    <rect x="276" y="230" width="48" height="4"/>
+                    <polygon points="262,236 338,236 334,244 266,244"/>
+                    <rect x="262" y="244" width="76" height="56"/>
+                    <rect x="260" y="300" width="80" height="4"/>
+                    <polygon points="244,306 356,306 352,314 248,314"/>
+                    <rect x="244" y="314" width="112" height="64"/>
+                    <rect x="242" y="378" width="116" height="4"/>
+                    <polygon points="222,384 378,384 374,394 226,394"/>
+                    <rect x="222" y="394" width="156" height="48"/>
+                    <rect x="220" y="442" width="160" height="6"/>
+                </g>
+                <g transform="translate(300 110)" fill="none" stroke="url(#goldGrad)" stroke-width="3" stroke-linecap="round">
+                    <circle cx="0" cy="0" r="18"/>
+                    <ellipse cx="0" cy="0" rx="18" ry="6"/>
+                    <line x1="0" y1="-18" x2="0" y2="18"/>
+                    <ellipse cx="0" cy="0" rx="9" ry="18"/>
+                </g>
+                <g fill="#0C0B09">
+                    <rect x="285" y="190" width="2.5" height="36"/><rect x="293" y="190" width="2.5" height="36"/><rect x="301" y="190" width="2.5" height="36"/><rect x="309" y="190" width="2.5" height="36"/>
+                    <rect x="270" y="252" width="2.5" height="44"/><rect x="278" y="252" width="2.5" height="44"/><rect x="286" y="252" width="2.5" height="44"/><rect x="294" y="252" width="2.5" height="44"/><rect x="302" y="252" width="2.5" height="44"/><rect x="310" y="252" width="2.5" height="44"/><rect x="318" y="252" width="2.5" height="44"/><rect x="326" y="252" width="2.5" height="44"/>
+                    <rect x="252" y="322" width="2.5" height="52"/><rect x="260" y="322" width="2.5" height="52"/><rect x="268" y="322" width="2.5" height="52"/><rect x="276" y="322" width="2.5" height="52"/><rect x="284" y="322" width="2.5" height="52"/><rect x="292" y="322" width="2.5" height="52"/><rect x="300" y="322" width="2.5" height="52"/><rect x="308" y="322" width="2.5" height="52"/><rect x="316" y="322" width="2.5" height="52"/><rect x="324" y="322" width="2.5" height="52"/><rect x="332" y="322" width="2.5" height="52"/><rect x="340" y="322" width="2.5" height="52"/>
+                </g>
+            </symbol>
+        </defs>
+    </svg>
+
+    <!-- faixa do grupo -->
+    <div class="bg-ink-900 border-b border-gold-700/30 py-2 text-[10px] font-mono uppercase tracking-[0.25em] text-ink-200 text-center px-3">
+        Uma empresa do <span class="text-gold-400 font-bold">Grupo Exithus</span> · Investimento, Construção &amp; Legado
+    </div>
+
+    <div class="relative hero-bg min-h-screen">
+        <div class="grain"></div>
+
+        <!-- NAV -->
+        <header class="relative z-50 border-b border-ink-500/40 sticky top-0 bg-ink-800/85 backdrop-blur-md nav-load">
+            <div class="flex justify-between items-center px-5 lg:px-10 py-4 max-w-[520px] lg:max-w-[1180px] mx-auto">
+                <a href="../" class="flex items-center gap-3">
+                    <svg class="w-8 h-8 spire-glow" viewBox="0 0 600 600"><use href="#atlasBuilding"/></svg>
+                    <div class="flex flex-col leading-none">
+                        <span class="font-display tracking-tight text-lg font-semibold text-paper">Build<span class="text-gold-400 italic">Atlas</span></span>
+                        <span class="text-[8px] font-mono uppercase tracking-[0.3em] text-ink-300 mt-1">Consultoria de Patrimônio</span>
+                    </div>
+                </a>
+                <a href="#form" class="bg-gold-400 text-ink-800 px-4 py-2 text-[10px] uppercase tracking-[0.15em] rounded-full font-bold btn-beam flex items-center gap-1.5">
+                    Agendar
+                    <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+                </a>
+            </div>
+        </header>
+
+        <main class="relative z-10 lp-main mx-auto px-5">
+
+            <!-- MICRO-HERO -->
+            <section class="lp-hero pt-10 pb-2">
+                <div class="reveal">
+                    <span class="inline-flex items-center gap-2 px-4 py-2 border border-gold-400/60 bg-gold-400/5 backdrop-blur-md rounded-full text-[10px] font-mono uppercase text-gold-300 tracking-[0.22em]">
+                        <span class="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse"></span>
+                        Especialistas em Consórcios · 2026
+                    </span>
+                </div>
+
+                <h1 class="font-display font-semibold tracking-tight text-paper leading-[0.95] mt-7 reveal delay-100">
+                    <span class="block text-5xl">Construa o</span>
+                    <span class="block text-5xl shimmer-gold italic">patrimônio</span>
+                    <span class="block text-5xl">que ficará.</span>
+                </h1>
+
+                <p class="text-ink-100 font-light leading-relaxed mt-6 reveal delay-200">
+                    Consultoria especializada em <strong class="text-gold-300 font-medium">construção de patrimônio via consórcios</strong>. Estruturamos cartas e estratégias com método — não com sorte.
+                </p>
+
+                <!-- KPIs -->
+                <div class="grid grid-cols-3 gap-3 mt-8 pt-7 border-t border-ink-500/30 reveal delay-300">
+                    <div>
+                        <div class="text-2xl font-display font-semibold text-gold-400 num-display">+R$480M</div>
+                        <div class="text-[9px] font-mono uppercase tracking-[0.15em] text-ink-200 mt-1 leading-tight">em cartas administradas</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-display font-semibold text-gold-400 num-display">2.300<span class="text-gold-200">+</span></div>
+                        <div class="text-[9px] font-mono uppercase tracking-[0.15em] text-ink-200 mt-1 leading-tight">famílias contempladas</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-display font-semibold text-gold-400 num-display">98<span class="text-gold-200">%</span></div>
+                        <div class="text-[9px] font-mono uppercase tracking-[0.15em] text-ink-200 mt-1 leading-tight">satisfação dos clientes</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FORM -->
+            <section id="form" class="lp-form pt-10 pb-14">
+                <div class="bg-ink-800/60 backdrop-blur border border-ink-500/40 rounded-3xl p-6 md:p-8 reveal">
+                    <div id="formHead">
+                        <span class="text-[10px] font-mono uppercase text-gold-400 block mb-3 tracking-[0.3em]">Comece agora</span>
+                        <h2 class="text-3xl font-display font-medium tracking-tight text-paper leading-[1]">
+                            Seu diagnóstico em<br><span class="italic shimmer-gold">3 toques.</span>
+                        </h2>
+                        <p class="text-ink-100 text-sm mt-4 leading-relaxed">
+                            Sem compromisso — você sai com simulação e clareza. Leva menos de 1 minuto.
+                        </p>
+
+                        <!-- progresso -->
+                        <div id="progress" class="prog mt-7 mb-6">
+                            <div class="b on" id="p1"></div>
+                            <div class="b" id="p2"></div>
+                            <div class="b" id="p3"></div>
+                        </div>
+                    </div>
+
+                    <form id="lead-form" novalidate>
+                        <!-- PASSO 1 — objetivo -->
+                        <div class="fstep show" id="s1">
+                            <h3 class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 mb-1">01 · Qual o seu objetivo?</h3>
+                            <p class="text-ink-300 text-xs mb-4">Toque na opção que mais combina.</p>
+                            <div class="chips" id="objOpts">
+                                <button type="button" class="opt" data-v="Comprar imóvel"><iconify-icon icon="solar:home-2-bold"></iconify-icon> Comprar imóvel</button>
+                                <button type="button" class="opt" data-v="Comprar veículo"><iconify-icon icon="solar:wheel-bold"></iconify-icon> Veículo</button>
+                                <button type="button" class="opt" data-v="Capital de giro PJ"><iconify-icon icon="solar:buildings-2-bold"></iconify-icon> Capital de giro</button>
+                                <button type="button" class="opt" data-v="Investimento patrimonial"><iconify-icon icon="solar:graph-up-bold"></iconify-icon> Investimento</button>
+                                <button type="button" class="opt" data-v="Reforma / Construção"><iconify-icon icon="solar:ruler-pen-bold"></iconify-icon> Reforma / Obra</button>
+                                <button type="button" class="opt" data-v="Outro"><iconify-icon icon="solar:chat-round-dots-bold"></iconify-icon> Outro</button>
+                            </div>
+                            <input type="hidden" id="lf-objetivo" name="objetivo" required />
+                            <p class="err" id="e1">Selecione um objetivo para continuar.</p>
+                        </div>
+
+                        <!-- PASSO 2 — faixa de valor -->
+                        <div class="fstep" id="s2">
+                            <h3 class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 mb-1">02 · Qual faixa de valor?</h3>
+                            <p class="text-ink-300 text-xs mb-4">Pode ser estimativa — ajustamos no diagnóstico.</p>
+                            <div class="chips" id="valOpts">
+                                <button type="button" class="opt" data-v="Até R$100 mil"><iconify-icon icon="solar:wad-of-money-bold"></iconify-icon> Até R$100 mil</button>
+                                <button type="button" class="opt" data-v="R$100–300 mil"><iconify-icon icon="solar:banknote-2-bold"></iconify-icon> R$100–300 mil</button>
+                                <button type="button" class="opt" data-v="R$300–600 mil"><iconify-icon icon="solar:safe-2-bold"></iconify-icon> R$300–600 mil</button>
+                                <button type="button" class="opt" data-v="Acima de R$600 mil"><iconify-icon icon="solar:crown-bold"></iconify-icon> +R$600 mil</button>
+                            </div>
+                            <input type="hidden" id="lf-valor" name="valor" required />
+                            <p class="err" id="e2">Selecione uma faixa para continuar.</p>
+                            <div class="flex gap-3 mt-7">
+                                <button type="button" id="back2" class="px-5 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-[0.15em] text-ink-200 border border-ink-500/50">Voltar</button>
+                            </div>
+                        </div>
+
+                        <!-- PASSO 3 — contato (sem e-mail) -->
+                        <div class="fstep" id="s3">
+                            <h3 class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 mb-1">03 · Como falamos com você?</h3>
+                            <p class="text-ink-300 text-xs mb-5">Só o essencial. Sem spam.</p>
+                            <div class="fld mb-5">
+                                <label for="lf-nome" class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 block mb-1">Nome</label>
+                                <input id="lf-nome" name="nome" type="text" required placeholder="Seu nome" />
+                            </div>
+                            <div class="fld">
+                                <label for="lf-whats" class="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 block mb-1">WhatsApp</label>
+                                <input id="lf-whats" name="whatsapp" type="tel" inputmode="numeric" required placeholder="(92) 90000-0000" />
+                            </div>
+                            <p class="err" id="e3">Preencha nome e um WhatsApp válido.</p>
+                            <div class="flex gap-3 mt-7">
+                                <button type="button" id="back3" class="px-5 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-[0.15em] text-ink-200 border border-ink-500/50">Voltar</button>
+                                <button type="submit" class="flex-1 px-5 py-3.5 rounded-full text-[11px] font-bold uppercase tracking-[0.15em] btn-beam flex items-center justify-center gap-2" style="background: var(--green); color: #062611;">
+                                    <iconify-icon icon="ic:baseline-whatsapp" class="text-base"></iconify-icon>
+                                    Falar com consultor
+                                </button>
+                            </div>
+                            <p id="lf-status" class="text-[10px] font-mono uppercase tracking-widest text-ink-300 text-center mt-5 leading-relaxed">
+                                Seus dados são protegidos pela LGPD.
+                            </p>
+                        </div>
+
+                        <!-- SUCESSO — WhatsApp só aparece aqui -->
+                        <div class="fstep" id="sDone">
+                            <div class="ck"><iconify-icon icon="solar:check-circle-bold"></iconify-icon></div>
+                            <h3 id="doneName" class="text-2xl font-display font-medium text-paper text-center mb-2">Perfeito!</h3>
+                            <p class="text-ink-100 text-sm text-center mb-7 leading-relaxed">
+                                Seu resumo está pronto. Toque abaixo para falar com o consultor no WhatsApp.
+                            </p>
+                            <a id="waFinal" href="#" target="_blank" rel="noopener"
+                               class="w-full flex items-center justify-center gap-2.5 px-6 py-4 rounded-full text-sm font-bold uppercase tracking-[0.15em] btn-beam"
+                               style="background: var(--green); color: #062611;">
+                                <iconify-icon icon="ic:baseline-whatsapp" class="text-xl"></iconify-icon>
+                                Abrir WhatsApp
+                            </a>
+                            <p class="text-[10px] font-mono uppercase tracking-widest text-ink-300 text-center mt-5">
+                                Resumo pré-preenchido · é só enviar.
+                            </p>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- selo de confiança -->
+                <div class="flex items-center justify-center gap-2 mt-6 text-[10px] font-mono uppercase tracking-[0.2em] text-ink-300">
+                    <iconify-icon icon="solar:shield-check-bold" class="text-gold-400"></iconify-icon>
+                    Consultoria gratuita · Sem compromisso
+                </div>
+
+                <!-- selos de compliance -->
+                <div class="trust mt-5">
+                    <span class="seal"><span class="dot"></span> Bacen</span>
+                    <span class="seal"><span class="dot"></span> ANCORD · CPA-20</span>
+                    <span class="seal"><span class="dot"></span> Conta segregada</span>
+                    <span class="seal"><span class="dot"></span> LGPD</span>
+                </div>
+            </section>
+
+            <!-- DEPOIMENTOS -->
+            <section class="lp-aside pb-14 reveal">
+                <div class="gold-rule w-16 mb-7"></div>
+                <span class="text-[10px] font-mono uppercase text-gold-400 block mb-3 tracking-[0.3em]">Quem já subiu</span>
+                <h2 class="text-3xl font-display font-medium tracking-tight text-paper leading-[1.05] mb-7">
+                    Histórias de <span class="italic shimmer-gold">contemplação.</span>
+                </h2>
+                <div class="tcards" id="tCards">
+                    <div class="tcard">
+                        <p class="quote">"Eram 14 meses até a contemplação. Com o lance que a Atlas estruturou, saí em <b>7</b>. Hoje o apê é meu."</p>
+                        <div class="who">
+                            <div class="av">M</div>
+                            <div>
+                                <div class="nm">Mariana D.</div>
+                                <div class="meta">Carta · R$420K · Imóvel</div>
+                                <div class="verif"><iconify-icon icon="solar:verified-check-bold"></iconify-icon> contemplação verificada</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tcard">
+                        <p class="quote">"Pra renovar a frota eu queria evitar o banco. Atlas montou 5 cartas combinadas e <b>economizei R$380 mil</b> em juros."</p>
+                        <div class="who">
+                            <div class="av">R</div>
+                            <div>
+                                <div class="nm">Ricardo P.</div>
+                                <div class="meta">5 cartas · R$1.2M · Frota</div>
+                                <div class="verif"><iconify-icon icon="solar:verified-check-bold"></iconify-icon> contemplação verificada</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tcard">
+                        <p class="quote">"Comecei sem entender nada. Em 6 meses entendi mais de patrimônio do que em 10 anos de salário."</p>
+                        <div class="who">
+                            <div class="av">A</div>
+                            <div>
+                                <div class="nm">André L.</div>
+                                <div class="meta">Carta · R$180K · 1ª casa</div>
+                                <div class="verif"><iconify-icon icon="solar:verified-check-bold"></iconify-icon> contemplação verificada</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tcard">
+                        <p class="quote">"Estruturei 3 cartas pra investir. Já fui contemplada na 2ª e o aluguel <b>paga as parcelas</b>. Patrimônio que se sustenta."</p>
+                        <div class="who">
+                            <div class="av">C</div>
+                            <div>
+                                <div class="nm">Carla M.</div>
+                                <div class="meta">3 cartas · R$650K · Investimento</div>
+                                <div class="verif"><iconify-icon icon="solar:verified-check-bold"></iconify-icon> contemplação verificada</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-[10px] font-mono uppercase tracking-[0.2em] text-ink-300 mt-2 flex items-center gap-2">
+                    <iconify-icon icon="solar:arrow-right-linear" class="text-gold-400"></iconify-icon>
+                    Arraste para ver mais
+                </p>
+
+                <!-- CTA de retorno ao formulário -->
+                <a href="#form" class="mt-9 w-full bg-gold-400 text-ink-800 px-6 py-4 rounded-full text-xs font-bold uppercase tracking-[0.2em] btn-beam flex items-center justify-center gap-2">
+                    Quero meu diagnóstico
+                    <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+                </a>
+            </section>
+
+
+            <!-- COMPARATIVO — Atlas vs. banco (fecha objeção de valor) -->
+            <section class="lp-aside pb-14 reveal">
+                <div class="gold-rule w-16 mb-7"></div>
+                <span class="text-[10px] font-mono uppercase text-gold-400 block mb-3 tracking-[0.3em]">Por que consórcio</span>
+                <h2 class="text-3xl font-display font-medium tracking-tight text-paper leading-[1.05] mb-7">
+                    Consórcio <span class="italic shimmer-gold">vs.</span> financiamento.
+                </h2>
+                <div class="vs">
+                    <div class="vscard atlas">
+                        <div class="vh"><iconify-icon icon="solar:buildings-3-bold"></iconify-icon> Build Atlas · Consórcio</div>
+                        <ul class="vslist">
+                            <li><span class="mk">✓</span><span>Custo: só taxa adm. <b>(~13–28%)</b></span></li>
+                            <li><span class="mk">✓</span><span>Sem <b>entrada obrigatória</b></span></li>
+                            <li><span class="mk">✓</span><span>Análise <b>simplificada</b></span></li>
+                            <li><span class="mk">✓</span><span>Lance <b>acelera a contemplação</b></span></li>
+                        </ul>
+                    </div>
+                    <div class="vscard bank">
+                        <div class="vh"><iconify-icon icon="solar:bank-bold"></iconify-icon> Financiamento bancário</div>
+                        <ul class="vslist">
+                            <li><span class="mk">✕</span><span>Juros podem dobrar o valor <b>(CET 80–130%)</b></span></li>
+                            <li><span class="mk">✕</span><span>Entrada de <b>20–30%</b></span></li>
+                            <li><span class="mk">✕</span><span>Score <b>crítico e restritivo</b></span></li>
+                            <li><span class="mk">✕</span><span>Amortizar <b>custa caro</b></span></li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="#form" class="mt-8 w-full bg-gold-400 text-ink-800 px-6 py-4 rounded-full text-xs font-bold uppercase tracking-[0.2em] btn-beam flex items-center justify-center gap-2">
+                    Montar minha estratégia
+                    <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+                </a>
+            </section>
+
+            <!-- MÉTODO — 4 andares -->
+            <section class="lp-aside pb-14 reveal">
+                <div class="gold-rule w-16 mb-7"></div>
+                <span class="text-[10px] font-mono uppercase text-gold-400 block mb-3 tracking-[0.3em]">O método</span>
+                <h2 class="text-3xl font-display font-medium tracking-tight text-paper leading-[1.05] mb-7">
+                    Construímos andar<br><span class="italic shimmer-gold">por andar.</span>
+                </h2>
+                <div class="grid gap-3">
+                    <div class="step">
+                        <div class="num">Andar 01</div>
+                        <h4>Diagnóstico</h4>
+                        <p>Mapeamos perfil, objetivo e horizonte. Quanto, quando e por quê.</p>
+                        <span class="tag">30 minutos · grátis</span>
+                    </div>
+                    <div class="step">
+                        <div class="num">Andar 02</div>
+                        <h4>Estrutura</h4>
+                        <p>Combinação de cartas, prazos, taxas e administradora — tudo no papel antes do 1º real.</p>
+                        <span class="tag">plano consultivo</span>
+                    </div>
+                    <div class="step">
+                        <div class="num">Andar 03</div>
+                        <h4>Execução</h4>
+                        <p>Adesão, lances estratégicos e acompanhamento mensal nas assembleias.</p>
+                        <span class="tag">contínuo</span>
+                    </div>
+                    <div class="step">
+                        <div class="num">Andar 04 · Topo</div>
+                        <h4>Contemplação</h4>
+                        <p>Carta liberada, assessoria na aquisição e formalização. O objetivo toma forma.</p>
+                        <span class="tag">objetivo realizado</span>
+                    </div>
+                </div>
+                <a href="#form" class="mt-9 w-full bg-gold-400 text-ink-800 px-6 py-4 rounded-full text-xs font-bold uppercase tracking-[0.2em] btn-beam flex items-center justify-center gap-2">
+                    Começar pelo Andar 01
+                    <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+                </a>
+            </section>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="relative z-10 border-t border-ink-500/40 max-w-[520px] lg:max-w-[1180px] mx-auto px-5 lg:px-10 py-8 flex flex-col items-center gap-4 text-center">
+            <div class="gold-rule w-24"></div>
+            <div class="text-[10px] font-mono uppercase tracking-[0.25em] text-ink-300">© MMXXVI · Build Atlas · CNPJ 19.060.245/0001-32</div>
+            <div class="flex gap-5 text-[10px] font-mono uppercase tracking-[0.2em] text-ink-300">
+                <a href="../politica-privacidade.html" class="hover:text-gold-300 transition-colors">Privacidade</a>
+                <a href="../termos-de-uso.html" class="hover:text-gold-300 transition-colors">Termos</a>
+                <a href="../lgpd.html" class="hover:text-gold-300 transition-colors">LGPD</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+    /* ===== contato (codificado anti-scraping, igual ao contact.js) ===== */
+    var CONTATO = {
+        phone:      'KDkyKSA5OTEyMy0wMjM5',          // (92) 99123-0239
+        phone_intl: 'NTU5Mjk5MTIzMDIzOQ=='           // 5592991230239
+    };
+    function decode(s){ try { return decodeURIComponent(escape(atob(s))); } catch(e){ return atob(s); } }
+    var NUMERO_WA = decode(CONTATO.phone_intl);
+
+    /* ===== animações de entrada ===== */
+    document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(function(){ document.querySelector('.nav-load')?.classList.add('loaded'); }, 100);
+        var obs = new IntersectionObserver(function(entries){
+            entries.forEach(function(en){ if(en.isIntersecting) en.target.classList.add('active'); });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+
+        /* ===== máscara WhatsApp (igual ao main.js) ===== */
+        var whats = document.getElementById('lf-whats');
+        whats.addEventListener('input', function(e){
+            var d = e.target.value.replace(/\D/g, '').slice(0, 11);
+            var m = '';
+            if (d.length === 0) m = '';
+            else if (d.length <= 2) m = '(' + d;
+            else if (d.length <= 7) m = '(' + d.slice(0,2) + ') ' + d.slice(2);
+            else m = '(' + d.slice(0,2) + ') ' + d.slice(2,7) + '-' + d.slice(7);
+            e.target.value = m;
+        });
+        whats.addEventListener('keydown', function(e){
+            var ok = ['Backspace','Delete','Tab','Escape','Enter','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'];
+            if (!ok.includes(e.key) && !/^\d$/.test(e.key)) e.preventDefault();
+        });
+    });
+
+    /* ===== multi-step ===== */
+    var step = 1;
+    function show(n){
+        document.querySelectorAll('.fstep').forEach(function(s){ s.classList.remove('show'); });
+        document.getElementById(n === 'done' ? 'sDone' : 's' + n).classList.add('show');
+        var done = (n === 'done');
+        document.getElementById('formHead').style.display = done ? 'none' : '';
+        document.getElementById('p1').classList.toggle('on', done || n >= 1);
+        document.getElementById('p2').classList.toggle('on', done || n >= 2);
+        document.getElementById('p3').classList.toggle('on', done || n >= 3);
+        document.getElementById('form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /* seleção em chips: objetivo (passo 1) e faixa (passo 2) avançam automaticamente */
+    function bindChips(containerId, hiddenId, errId, nextStep) {
+        document.getElementById(containerId).addEventListener('click', function(e){
+            var b = e.target.closest('.opt'); if (!b) return;
+            document.querySelectorAll('#' + containerId + ' .opt').forEach(function(x){ x.classList.remove('sel'); });
+            b.classList.add('sel');
+            document.getElementById(hiddenId).value = b.dataset.v;
+            document.getElementById(errId).classList.remove('show');
+            setTimeout(function(){ step = nextStep; show(nextStep); }, 200);
+        });
+    }
+    bindChips('objOpts', 'lf-objetivo', 'e1', 2);
+    bindChips('valOpts', 'lf-valor', 'e2', 3);
+
+    document.getElementById('back2').addEventListener('click', function(){ step = 1; show(1); });
+    document.getElementById('back3').addEventListener('click', function(){ step = 2; show(2); });
+
+    /* envio → monta mensagem e libera WhatsApp (lógica do form.js) */
+    document.getElementById('lead-form').addEventListener('submit', function(e){
+        e.preventDefault();
+        var nome     = document.getElementById('lf-nome').value.trim();
+        var whatsapp = document.getElementById('lf-whats').value.trim();
+        var digits   = whatsapp.replace(/\D/g, '');
+        var objetivo = document.getElementById('lf-objetivo').value.trim();
+        var valor    = document.getElementById('lf-valor').value.trim();
+
+        if (nome.length < 2 || digits.length < 10) {
+            document.getElementById('e3').classList.add('show'); return;
+        }
+        document.getElementById('e3').classList.remove('show');
+
+        var linhas = [
+            'Olá! Vim pelo site da Build Atlas.',
+            '',
+            '*Nome:* ' + nome,
+            '*WhatsApp:* ' + whatsapp,
+            '*Objetivo:* ' + objetivo,
+            '*Faixa de valor:* ' + valor
+        ];
+        var texto = linhas.join('\n');
+
+        var url = 'https://wa.me/' + NUMERO_WA + '?text=' + encodeURIComponent(texto);
+        document.getElementById('waFinal').setAttribute('href', url);
+        document.getElementById('doneName').textContent = 'Perfeito, ' + (nome.split(' ')[0] || '') + '!';
+
+        show('done');
+    });
+    </script>
+</body>
+</html>
