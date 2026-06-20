@@ -56,13 +56,16 @@
             --green: #25D366;
         }
         html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        *, *::before, *::after { box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: var(--ink);
             color: var(--paper);
             overflow-x: hidden;
+            max-width: 100%;
             -webkit-font-smoothing: antialiased;
         }
+        img, svg { max-width: 100%; }
         .text-paper { color: var(--paper); }
 
         /* ---- entrada / reveal ---- */
@@ -169,10 +172,10 @@
         .step p { font-size: 13.5px; color: #BFB9A8; line-height: 1.5; }
         .step .tag { display: inline-block; margin-top: 12px; font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--gold-bright); text-transform: uppercase; letter-spacing: .12em; border: 1px solid rgba(140,132,114,.35); padding: 4px 10px; border-radius: 999px; }
 
-        /* depoimentos */
-        .tcards { display: flex; gap: 12px; overflow-x: auto; margin: 0 -20px; padding: 4px 20px 12px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        /* depoimentos — empilhados no mobile (sem rolagem lateral) */
+        .tcards { display: flex; flex-direction: column; gap: 12px; padding: 4px 0 12px; max-width: 100%; }
         .tcards::-webkit-scrollbar { display: none; }
-        .tcard { flex: 0 0 84%; scroll-snap-align: start; background: rgba(30,28,22,.5); border: 1px solid rgba(140,132,114,.3); border-radius: 16px; padding: 20px; }
+        .tcard { flex: 0 0 auto; width: 100%; background: rgba(30,28,22,.5); border: 1px solid rgba(140,132,114,.3); border-radius: 16px; padding: 20px; }
         .tcard p.quote { font-size: 14px; color: var(--paper); line-height: 1.55; margin-bottom: 16px; }
         .tcard p.quote b { color: var(--gold-bright); font-weight: 700; }
         .tcard .who { display: flex; align-items: center; gap: 12px; }
@@ -207,8 +210,32 @@
         }
         .trust .seal .dot { width: 7px; height: 7px; border-radius: 50%; background: #5BBF8A; flex: 0 0 auto; box-shadow: 0 0 8px rgba(91,191,138,.6); }
 
+        /* ===================== TIPOGRAFIA FLUIDA ===================== */
+        /* escala suave entre 320px e ~480px, evitando saltos e overflow */
+        .lp-hero h1 .block { font-size: clamp(2.1rem, 11vw, 3.25rem); }
+        .h-fluid { font-size: clamp(1.55rem, 7.4vw, 2rem); }
+        .kpi-num { font-size: clamp(1.05rem, 5.6vw, 1.5rem); white-space: nowrap; }
+
+        /* ===== reparos de overflow no mobile ===== */
+        /* faixa do topo: reduz o tracking em telas pequenas para não estourar */
+        @media (max-width: 420px) {
+            .topbar-strip { letter-spacing: .12em !important; }
+            .hero-badge { letter-spacing: .14em; font-size: 9px; }
+        }
+        /* badge da hero nunca empurra a largura */
+        .hero-badge { max-width: 100%; }
+        /* KPIs: rótulos podem quebrar, sem forçar largura */
+        .lp-hero .num-display + div { word-break: break-word; }
+
         /* ===================== LAYOUT MOBILE (padrão) ===================== */
         .lp-main { max-width: 520px; }
+
+        /* faixa intermediária (tablets / telas largas) — mantém a coluna
+           centrada e legível antes do layout de 2 colunas entrar em 1024px */
+        @media (min-width: 600px) and (max-width: 1023px) {
+            .lp-main { max-width: 600px; }
+            .chips { grid-template-columns: 1fr 1fr 1fr; }
+        }
 
         /* ===================== LAYOUT DESKTOP ===================== */
         @media (min-width: 1024px) {
@@ -220,10 +247,8 @@
                 align-items: start;
                 padding-left: 40px; padding-right: 40px;
             }
-            /* coluna esquerda: hero + depoimentos + comparativo + método (empilhados) */
             .lp-hero  { grid-column: 1; padding-top: 64px; }
             .lp-aside { grid-column: 1; }
-            /* coluna direita: formulário fixo, acompanha toda a coluna esquerda (4 seções) */
             .lp-form {
                 grid-column: 2;
                 grid-row: 1 / span 4;
@@ -232,19 +257,14 @@
                 padding-top: 64px;
                 align-self: start;
             }
-            /* hero maior no desktop */
             .lp-hero h1 .block { font-size: 4.5rem; }
             .lp-hero p { font-size: 1.075rem; max-width: 30rem; }
             .lp-hero .grid { max-width: 30rem; }
-            /* depoimentos: cards lado a lado, sem scroll horizontal */
-            .lp-aside .tcards { margin: 0; padding: 4px 0 12px; }
-            .lp-aside .tcard { flex: 0 0 calc(50% - 6px); }
-            .lp-aside .tcards + p { display: none; } /* esconde "arraste para ver mais" no desktop */
-            /* método em 2 colunas */
+            .lp-aside .tcards { flex-direction: row; flex-wrap: wrap; margin: 0; padding: 4px 0 12px; }
+            .lp-aside .tcard { flex: 0 0 calc(50% - 6px); width: auto; }
+            .lp-aside .tcards + p { display: none; }
             .lp-aside .grid.gap-3 { grid-template-columns: 1fr 1fr; }
-            /* comparativo lado a lado no desktop */
             .lp-aside .vs { grid-template-columns: 1fr 1fr; }
-            /* esconde o CTA "quero meu diagnóstico" no desktop (form já está à vista) */
             .lp-aside a[href="#form"] { display: none; }
         }
         @media (min-width: 1024px) and (max-width: 1140px) {
@@ -300,7 +320,7 @@
     </svg>
 
     <!-- faixa do grupo -->
-    <div class="bg-ink-900 border-b border-gold-700/30 py-2 text-[10px] font-mono uppercase tracking-[0.25em] text-ink-200 text-center px-3">
+    <div class="topbar-strip bg-ink-900 border-b border-gold-700/30 py-2 text-[10px] font-mono uppercase tracking-[0.25em] text-ink-200 text-center px-3">
         Uma empresa do <span class="text-gold-400 font-bold">Grupo Exithus</span> · Investimento, Construção &amp; Legado
     </div>
 
@@ -329,16 +349,16 @@
             <!-- MICRO-HERO -->
             <section class="lp-hero pt-10 pb-2">
                 <div class="reveal">
-                    <span class="inline-flex items-center gap-2 px-4 py-2 border border-gold-400/60 bg-gold-400/5 backdrop-blur-md rounded-full text-[10px] font-mono uppercase text-gold-300 tracking-[0.22em]">
+                    <span class="hero-badge inline-flex items-center gap-2 px-4 py-2 border border-gold-400/60 bg-gold-400/5 backdrop-blur-md rounded-full text-[10px] font-mono uppercase text-gold-300 tracking-[0.22em]">
                         <span class="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse"></span>
                         Especialistas em Consórcios · 2026
                     </span>
                 </div>
 
                 <h1 class="font-display font-semibold tracking-tight text-paper leading-[0.95] mt-7 reveal delay-100">
-                    <span class="block text-5xl">Construa o</span>
-                    <span class="block text-5xl shimmer-gold italic">patrimônio</span>
-                    <span class="block text-5xl">que ficará.</span>
+                    <span class="block">Construa o</span>
+                    <span class="block shimmer-gold italic">patrimônio</span>
+                    <span class="block">que ficará.</span>
                 </h1>
 
                 <p class="text-ink-100 font-light leading-relaxed mt-6 reveal delay-200">
@@ -348,15 +368,15 @@
                 <!-- KPIs -->
                 <div class="grid grid-cols-3 gap-3 mt-8 pt-7 border-t border-ink-500/30 reveal delay-300">
                     <div>
-                        <div class="text-2xl font-display font-semibold text-gold-400 num-display">+R$480M</div>
+                        <div class="kpi-num font-display font-semibold text-gold-400 num-display">+R$480M</div>
                         <div class="text-[9px] font-mono uppercase tracking-[0.15em] text-ink-200 mt-1 leading-tight">em cartas administradas</div>
                     </div>
                     <div>
-                        <div class="text-2xl font-display font-semibold text-gold-400 num-display">2.300<span class="text-gold-200">+</span></div>
+                        <div class="kpi-num font-display font-semibold text-gold-400 num-display">2.300<span class="text-gold-200">+</span></div>
                         <div class="text-[9px] font-mono uppercase tracking-[0.15em] text-ink-200 mt-1 leading-tight">famílias contempladas</div>
                     </div>
                     <div>
-                        <div class="text-2xl font-display font-semibold text-gold-400 num-display">98<span class="text-gold-200">%</span></div>
+                        <div class="kpi-num font-display font-semibold text-gold-400 num-display">98<span class="text-gold-200">%</span></div>
                         <div class="text-[9px] font-mono uppercase tracking-[0.15em] text-ink-200 mt-1 leading-tight">satisfação dos clientes</div>
                     </div>
                 </div>
@@ -367,7 +387,7 @@
                 <div class="bg-ink-800/60 backdrop-blur border border-ink-500/40 rounded-3xl p-6 md:p-8 reveal">
                     <div id="formHead">
                         <span class="text-[10px] font-mono uppercase text-gold-400 block mb-3 tracking-[0.3em]">Comece agora</span>
-                        <h2 class="text-3xl font-display font-medium tracking-tight text-paper leading-[1]">
+                        <h2 class="h-fluid font-display font-medium tracking-tight text-paper leading-[1]">
                             Seu diagnóstico em<br><span class="italic shimmer-gold">3 toques.</span>
                         </h2>
                         <p class="text-ink-100 text-sm mt-4 leading-relaxed">
@@ -480,7 +500,7 @@
             <section class="lp-aside pb-14 reveal">
                 <div class="gold-rule w-16 mb-7"></div>
                 <span class="text-[10px] font-mono uppercase text-gold-400 block mb-3 tracking-[0.3em]">Quem já subiu</span>
-                <h2 class="text-3xl font-display font-medium tracking-tight text-paper leading-[1.05] mb-7">
+                <h2 class="h-fluid font-display font-medium tracking-tight text-paper leading-[1.05] mb-7">
                     Histórias de <span class="italic shimmer-gold">contemplação.</span>
                 </h2>
                 <div class="tcards" id="tCards">
@@ -529,7 +549,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="text-[10px] font-mono uppercase tracking-[0.2em] text-ink-300 mt-2 flex items-center gap-2">
+                <p class="tcards-hint text-[10px] font-mono uppercase tracking-[0.2em] text-ink-300 mt-2 flex items-center gap-2" style="display:none">
                     <iconify-icon icon="solar:arrow-right-linear" class="text-gold-400"></iconify-icon>
                     Arraste para ver mais
                 </p>
@@ -546,7 +566,7 @@
             <section class="lp-aside pb-14 reveal">
                 <div class="gold-rule w-16 mb-7"></div>
                 <span class="text-[10px] font-mono uppercase text-gold-400 block mb-3 tracking-[0.3em]">Por que consórcio</span>
-                <h2 class="text-3xl font-display font-medium tracking-tight text-paper leading-[1.05] mb-7">
+                <h2 class="h-fluid font-display font-medium tracking-tight text-paper leading-[1.05] mb-7">
                     Consórcio <span class="italic shimmer-gold">vs.</span> financiamento.
                 </h2>
                 <div class="vs">
@@ -579,7 +599,7 @@
             <section class="lp-aside pb-14 reveal">
                 <div class="gold-rule w-16 mb-7"></div>
                 <span class="text-[10px] font-mono uppercase text-gold-400 block mb-3 tracking-[0.3em]">O método</span>
-                <h2 class="text-3xl font-display font-medium tracking-tight text-paper leading-[1.05] mb-7">
+                <h2 class="h-fluid font-display font-medium tracking-tight text-paper leading-[1.05] mb-7">
                     Construímos andar<br><span class="italic shimmer-gold">por andar.</span>
                 </h2>
                 <div class="grid gap-3">
@@ -691,7 +711,7 @@
     document.getElementById('back2').addEventListener('click', function(){ step = 1; show(1); });
     document.getElementById('back3').addEventListener('click', function(){ step = 2; show(2); });
 
-    /* envio → monta mensagem e libera WhatsApp (lógica do form.js) */
+    /* envio → redireciona para a página de obrigado levando os dados (rastreio de leads) */
     document.getElementById('lead-form').addEventListener('submit', function(e){
         e.preventDefault();
         var nome     = document.getElementById('lf-nome').value.trim();
@@ -705,21 +725,16 @@
         }
         document.getElementById('e3').classList.remove('show');
 
-        var linhas = [
-            'Olá! Vim pelo site da Build Atlas.',
-            '',
-            '*Nome:* ' + nome,
-            '*WhatsApp:* ' + whatsapp,
-            '*Objetivo:* ' + objetivo,
-            '*Faixa de valor:* ' + valor
-        ];
-        var texto = linhas.join('\n');
-
-        var url = 'https://wa.me/' + NUMERO_WA + '?text=' + encodeURIComponent(texto);
-        document.getElementById('waFinal').setAttribute('href', url);
-        document.getElementById('doneName').textContent = 'Perfeito, ' + (nome.split(' ')[0] || '') + '!';
-
-        show('done');
+        /* envia os dados do lead para a página de obrigado via query string.
+           A página /obrigado/ monta a mensagem, abre o WhatsApp automaticamente
+           e dispara os eventos de conversão (rastreio de tráfego). */
+        var params = new URLSearchParams({
+            nome: nome,
+            zap: whatsapp,
+            objetivo: objetivo,
+            valor: valor
+        });
+        window.location.href = '../obrigado/?' + params.toString();
     });
     </script>
 </body>

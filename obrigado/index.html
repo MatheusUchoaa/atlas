@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport" />
+    <title>Obrigado — Build Atlas</title>
+    <meta name="description" content="Recebemos seus dados. Estamos te direcionando ao WhatsApp do consultor Build Atlas." />
+    <meta name="theme-color" content="#0C0B09" />
+    <meta name="robots" content="noindex" />
+
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="apple-touch-icon" href="../favicon.svg" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        ink: {
+                            50: '#F4F2EC', 100: '#E6E2D6', 200: '#BFB9A8', 300: '#8C8472',
+                            400: '#4A4538', 500: '#2A2620', 600: '#1C1A16', 700: '#13110E',
+                            800: '#0C0B09', 900: '#060604',
+                        },
+                        gold: {
+                            50: '#FBF3DC', 100: '#F4E2A8', 200: '#EFC36A', 300: '#E8B855',
+                            400: '#D9A441', 500: '#C9962F', 600: '#B8862E', 700: '#8E6722',
+                            800: '#5E4516', 900: '#33260C',
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- ============================================================
+         RASTREIO / CONVERSÃO  (preenchido pela equipe de tráfego)
+         Esta página tem URL própria (/obrigado/) justamente para
+         marcar o lead como convertido. Cole aqui os scripts globais:
+           · Google Ads / gtag.js
+           · Meta Pixel
+           · Google Analytics 4
+         e dispare o evento de conversão dentro de dispararConversao()
+         mais abaixo, no bloco de script.
+         ============================================================ -->
+    <!-- COLE AQUI AS TAGS GLOBAIS DE RASTREIO (gtag, fbq, GA4...) -->
+
+    <style>
+        :root {
+            --gold: #D9A441; --gold-bright: #EFC36A; --gold-deep: #B8862E;
+            --ink: #0C0B09; --ink-2: #13110E; --paper: #F4F2EC; --green: #25D366;
+        }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: 'Inter', sans-serif; background: var(--ink); color: var(--paper);
+            overflow-x: hidden; -webkit-font-smoothing: antialiased; min-height: 100vh;
+        }
+        .text-paper { color: var(--paper); }
+        .hero-bg {
+            background:
+                radial-gradient(ellipse at 70% 0%, rgba(217,164,65,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 20% 80%, rgba(217,164,65,0.08) 0%, transparent 50%),
+                linear-gradient(180deg, #0C0B09 0%, #060604 100%);
+        }
+        .grain {
+            position: absolute; inset: 0; pointer-events: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+            opacity: 0.18; mix-blend-mode: overlay;
+        }
+        .spire-glow { filter: drop-shadow(0 0 18px rgba(239,195,106,0.55)); }
+        .shimmer-gold {
+            background: linear-gradient(90deg, #8E6722 0%, #EFC36A 30%, #FBF3DC 50%, #EFC36A 70%, #8E6722 100%);
+            background-size: 200% auto; color: transparent;
+            -webkit-background-clip: text; background-clip: text; animation: shimmer 5s linear infinite;
+        }
+        @keyframes shimmer { from { background-position: 0 0; } to { background-position: -200% 0; } }
+        .btn-beam { position: relative; overflow: hidden; }
+        .btn-beam::before {
+            content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,225,160,0.45), transparent); transition: left .6s;
+        }
+        .btn-beam:hover::before { left: 100%; }
+        .btn-beam:active { transform: scale(.985); }
+        ::selection { background: var(--gold); color: #0C0B09; }
+
+        /* check animado */
+        .ck { width: 84px; height: 84px; border-radius: 50%; background: rgba(91,191,138,.12);
+              border: 1px solid #5BBF8A; display: grid; place-items: center; margin: 0 auto 26px;
+              animation: pop .5s cubic-bezier(0.16,1,0.3,1); }
+        .ck iconify-icon { font-size: 44px; color: #5BBF8A; }
+        @keyframes pop { 0% { transform: scale(.4); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        .fade { opacity: 0; transform: translateY(14px); animation: fade .8s ease forwards; }
+        .d1 { animation-delay: .15s; } .d2 { animation-delay: .3s; } .d3 { animation-delay: .45s; }
+        @keyframes fade { to { opacity: 1; transform: none; } }
+
+        .spin { width: 16px; height: 16px; border: 2px solid rgba(6,38,17,.35); border-top-color: #062611;
+                border-radius: 50%; animation: rot .8s linear infinite; }
+        @keyframes rot { to { transform: rotate(360deg); } }
+
+        .resumo { background: rgba(30,28,22,.5); border: 1px solid rgba(140,132,114,.3); border-radius: 16px; }
+        .resumo .row { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid rgba(140,132,114,.18); }
+        .resumo .row:last-child { border-bottom: none; }
+        .resumo .k { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .15em; color: var(--gold); }
+        .resumo .v { font-size: 14px; font-weight: 600; color: var(--paper); text-align: right; }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- faixa do grupo -->
+    <div class="bg-ink-900 border-b border-gold-700/30 py-2 text-[10px] font-mono uppercase tracking-[0.25em] text-ink-200 text-center px-3">
+        Uma empresa do <span class="text-gold-400 font-bold">Grupo Exithus</span> · Investimento, Construção &amp; Legado
+    </div>
+
+    <div class="relative hero-bg min-h-screen flex flex-col">
+        <div class="grain"></div>
+
+        <!-- nav -->
+        <header class="relative z-10 border-b border-ink-500/40">
+            <div class="flex justify-center items-center px-5 py-4">
+                <a href="../" class="flex items-center gap-3">
+                    <svg class="w-8 h-8 spire-glow" viewBox="0 0 600 600">
+                        <defs>
+                            <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#FBF3DC"/><stop offset="35%" stop-color="#EFC36A"/>
+                                <stop offset="70%" stop-color="#D9A441"/><stop offset="100%" stop-color="#8E6722"/>
+                            </linearGradient>
+                        </defs>
+                        <g fill="url(#goldGrad)">
+                            <rect x="298.5" y="118" width="3" height="46"/><rect x="294" y="135" width="12" height="8"/>
+                            <polygon points="288,148 312,148 308,158 292,158"/><rect x="284" y="160" width="32" height="10"/>
+                            <polygon points="280,172 320,172 316,182 284,182"/><rect x="278" y="184" width="44" height="46"/>
+                            <rect x="276" y="230" width="48" height="4"/><polygon points="262,236 338,236 334,244 266,244"/>
+                            <rect x="262" y="244" width="76" height="56"/><rect x="260" y="300" width="80" height="4"/>
+                            <polygon points="244,306 356,306 352,314 248,314"/><rect x="244" y="314" width="112" height="64"/>
+                            <rect x="242" y="378" width="116" height="4"/><polygon points="222,384 378,384 374,394 226,394"/>
+                            <rect x="222" y="394" width="156" height="48"/><rect x="220" y="442" width="160" height="6"/>
+                        </g>
+                    </svg>
+                    <div class="flex flex-col leading-none">
+                        <span class="font-display tracking-tight text-lg font-semibold text-paper">Build<span class="text-gold-400 italic">Atlas</span></span>
+                        <span class="text-[8px] font-mono uppercase tracking-[0.3em] text-ink-300 mt-1">Consultoria de Patrimônio</span>
+                    </div>
+                </a>
+            </div>
+        </header>
+
+        <!-- conteúdo central -->
+        <main class="relative z-10 flex-1 flex items-center justify-center px-5 py-12">
+            <div class="w-full max-w-[460px] text-center">
+
+                <div class="ck"><iconify-icon icon="solar:check-circle-bold"></iconify-icon></div>
+
+                <span class="fade text-[10px] font-mono uppercase text-gold-400 block mb-3 tracking-[0.3em]">Recebido com sucesso</span>
+                <h1 class="fade d1 text-4xl font-display font-medium tracking-tight text-paper leading-[1.05]">
+                    Obrigado<span id="primeiroNome"></span>,<br><span class="italic shimmer-gold">já estamos com você.</span>
+                </h1>
+                <p class="fade d2 text-ink-100 text-sm mt-5 leading-relaxed">
+                    Estamos te levando ao WhatsApp do consultor para iniciar seu diagnóstico. Se não abrir automaticamente, toque no botão abaixo.
+                </p>
+
+                <!-- resumo do lead -->
+                <div id="resumoBox" class="resumo text-left p-5 mt-8 fade d2" style="display:none">
+                    <div class="row"><span class="k">Objetivo</span><span class="v" id="rObjetivo">—</span></div>
+                    <div class="row"><span class="k">Faixa de valor</span><span class="v" id="rValor">—</span></div>
+                    <div class="row"><span class="k">WhatsApp</span><span class="v" id="rZap">—</span></div>
+                </div>
+
+                <!-- botão WhatsApp -->
+                <a id="waBtn" href="#" target="_blank" rel="noopener"
+                   class="fade d3 mt-8 w-full flex items-center justify-center gap-2.5 px-6 py-4 rounded-full text-sm font-bold uppercase tracking-[0.15em] btn-beam"
+                   style="background: var(--green); color: #062611;">
+                    <span id="waSpin" class="spin"></span>
+                    <span id="waLabel">Abrindo WhatsApp…</span>
+                </a>
+
+                <a href="../" class="fade d3 inline-flex items-center gap-2 mt-6 text-[10px] font-mono uppercase tracking-[0.2em] text-ink-300 hover:text-gold-300 transition-colors">
+                    <iconify-icon icon="solar:arrow-left-linear"></iconify-icon> Voltar ao início
+                </a>
+            </div>
+        </main>
+
+        <!-- footer -->
+        <footer class="relative z-10 border-t border-ink-500/40 px-5 py-6 flex flex-col items-center gap-3 text-center">
+            <div class="text-[10px] font-mono uppercase tracking-[0.25em] text-ink-300">© MMXXVI · Build Atlas · CNPJ 19.060.245/0001-32</div>
+            <div class="flex gap-5 text-[10px] font-mono uppercase tracking-[0.2em] text-ink-300">
+                <a href="../politica-privacidade.html" class="hover:text-gold-300 transition-colors">Privacidade</a>
+                <a href="../termos-de-uso.html" class="hover:text-gold-300 transition-colors">Termos</a>
+                <a href="../lgpd.html" class="hover:text-gold-300 transition-colors">LGPD</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+    /* ===== número do consultor (codificado anti-scraping, igual ao contact.js) ===== */
+    var CONTATO = { phone_intl: 'NTU5Mjk5MTIzMDIzOQ==' }; // 5592991230239
+    function decode(s){ try { return decodeURIComponent(escape(atob(s))); } catch(e){ return atob(s); } }
+    var NUMERO_WA = decode(CONTATO.phone_intl);
+
+    /* ===== lê os dados do lead vindos da landing page (query string) ===== */
+    var qs = new URLSearchParams(window.location.search);
+    var nome     = (qs.get('nome')     || '').trim();
+    var whatsapp = (qs.get('zap')      || '').trim();
+    var objetivo = (qs.get('objetivo') || '').trim();
+    var valor    = (qs.get('valor')    || '').trim();
+
+    /* personaliza a página */
+    if (nome) {
+        document.getElementById('primeiroNome').textContent = ', ' + nome.split(' ')[0];
+    }
+    if (objetivo || valor || whatsapp) {
+        document.getElementById('resumoBox').style.display = 'block';
+        document.getElementById('rObjetivo').textContent = objetivo || '—';
+        document.getElementById('rValor').textContent   = valor || '—';
+        document.getElementById('rZap').textContent     = whatsapp || '—';
+    }
+
+    /* monta a mensagem do WhatsApp (mesmo formato do form.js) */
+    var linhas = ['Olá! Vim pelo site da Build Atlas.', ''];
+    if (nome)     linhas.push('*Nome:* ' + nome);
+    if (whatsapp) linhas.push('*WhatsApp:* ' + whatsapp);
+    if (objetivo) linhas.push('*Objetivo:* ' + objetivo);
+    if (valor)    linhas.push('*Faixa de valor:* ' + valor);
+    var texto = linhas.join('\n');
+    var urlWA = 'https://wa.me/' + NUMERO_WA + '?text=' + encodeURIComponent(texto);
+
+    var waBtn = document.getElementById('waBtn');
+    waBtn.setAttribute('href', urlWA);
+
+    /* ============================================================
+       EVENTO DE CONVERSÃO — chamado assim que a página de obrigado
+       carrega (o lead chegou aqui = formulário concluído).
+       A equipe de tráfego coloca aqui dentro o disparo do pixel/tag.
+       Exemplos (descomente e ajuste conforme a conta):
+         // gtag('event', 'conversion', { send_to: 'AW-XXXX/YYYY' });
+         // fbq('track', 'Lead');
+         // gtag('event', 'generate_lead');
+       ============================================================ */
+    function dispararConversao() {
+        try {
+            // COLE AQUI O DISPARO DO EVENTO DE CONVERSÃO
+        } catch (e) { /* não bloquear o fluxo do usuário */ }
+    }
+    dispararConversao();
+
+    /* ============================================================
+       EVENTO DE CLIQUE NO WHATSAPP — marca quem efetivamente seguiu
+       para o WhatsApp. Disparado tanto na abertura automática quanto
+       no clique manual no botão.
+       ============================================================ */
+    function dispararCliqueWhatsApp() {
+        try {
+            // COLE AQUI O DISPARO DO EVENTO DE CLIQUE NO WHATSAPP
+            // ex: gtag('event', 'click_whatsapp');  fbq('trackCustom', 'WhatsAppClick');
+        } catch (e) { /* silencioso */ }
+    }
+    waBtn.addEventListener('click', dispararCliqueWhatsApp);
+
+    /* ===== abre o WhatsApp automaticamente ao chegar ===== */
+    function abrirWhatsApp() {
+        dispararCliqueWhatsApp();
+        window.open(urlWA, '_blank', 'noopener');
+        // troca o botão para estado "pronto" (sem spinner)
+        document.getElementById('waSpin').style.display = 'none';
+        document.getElementById('waLabel').textContent = 'Abrir WhatsApp novamente';
+    }
+
+    /* pequeno atraso para a página renderizar e os eventos dispararem antes do popup */
+    setTimeout(abrirWhatsApp, 1200);
+    </script>
+</body>
+</html>
