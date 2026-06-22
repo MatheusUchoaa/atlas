@@ -2,18 +2,15 @@
 //
 // O que faz:
 //   Quando o cliente clica em "Agendar", esse script lê os campos do
-//   formulário, monta uma mensagem formatada e abre o WhatsApp do
-//   consultor (configurado em contact.js) numa NOVA ABA com o texto
-//   já pronto. O cliente só revisa e envia.
+//   formulário e redireciona para a página /obrigado/ levando os dados
+//   na query string. A página de obrigado monta a mensagem, abre o
+//   WhatsApp automaticamente e dispara os eventos de conversão.
+//   (Mesmo fluxo da landing page em /lp.)
 //
 // Por que separamos:
 //   Mantém index.html limpo (sem JavaScript inline). Toda regra de
 //   negócio do form fica neste arquivo — fácil de localizar e editar.
-//
-// Dependência:
-//   Lê o número do WhatsApp do mesmo lugar que o link [data-c="wa"]
-//   do site usa (definido em contact.js). Assim, se você trocar o
-//   número, edita só em um lugar — contact.js — e tudo se atualiza.
+//   O número do WhatsApp fica só na página /obrigado/ (e em contact.js).
 
 (function () {
   // Espera o DOM ficar pronto
@@ -39,41 +36,20 @@
       var objetivo = (document.getElementById('lf-objetivo')?.value || '').trim();
       var mensagem = (document.getElementById('lf-msg')?.value || '').trim();
 
-      // ─── 2. Monta a mensagem formatada para o WhatsApp ────────
-      // Asteriscos em volta = negrito no WhatsApp.
-      var linhas = [
-        'Olá! Vim pelo site da Build Atlas.',
-        '',
-        '*Nome:* ' + nome,
-        '*E-mail:* ' + email,
-        '*WhatsApp:* ' + whatsapp,
-        '*Objetivo:* ' + objetivo
-      ];
-      if (mensagem) {
-        linhas.push('*Mensagem:* ' + mensagem);
-      }
-      var texto = linhas.join('\n');
+      // ─── 2. Redireciona para a página de obrigado ─────────────
+      // Envia os dados via query string. A /obrigado/ monta a mensagem,
+      // abre o WhatsApp automaticamente e dispara o rastreio de conversão.
+      // (Campo `zap` = WhatsApp, mesmo nome que a landing /lp usa.)
+      var params = new URLSearchParams({
+        nome: nome,
+        email: email,
+        zap: whatsapp,
+        objetivo: objetivo,
+        mensagem: mensagem
+      });
 
-      // ─── 3. Pega o número do WhatsApp do consultor ────────────
-      // Reaproveita o link [data-c="wa"] que contact.js já preencheu
-      // no carregamento da página. Assim, número fica em um só lugar.
-      var waLink = document.querySelector('[data-c="wa"]');
-      var href = waLink ? waLink.getAttribute('href') : '';
-      var match = href.match(/wa\.me\/(\d+)/);
-
-      if (!match) {
-        // Caso contact.js não tenha rodado ainda (improvável, mas defensivo)
-        atualizarStatus('Aguarde um instante e tente de novo.', true);
-        return;
-      }
-      var numeroConsultor = match[1];
-
-      // ─── 4. Constrói a URL final e abre em nova aba ───────────
-      var url = 'https://wa.me/' + numeroConsultor +
-                '?text=' + encodeURIComponent(texto);
-
-      atualizarStatus('Abrindo WhatsApp…', false);
-      window.open(url, '_blank', 'noopener');
+      atualizarStatus('Redirecionando…', false);
+      window.location.href = 'obrigado/?' + params.toString();
     });
   });
 

@@ -212,6 +212,8 @@
     var whatsapp = (qs.get('zap')      || '').trim();
     var objetivo = (qs.get('objetivo') || '').trim();
     var valor    = (qs.get('valor')    || '').trim();
+    var email    = (qs.get('email')    || '').trim();   // vem do form do index
+    var mensagem = (qs.get('mensagem') || '').trim();   // vem do form do index
 
     /* personaliza a página */
     if (nome) {
@@ -227,9 +229,11 @@
     /* monta a mensagem do WhatsApp (mesmo formato do form.js) */
     var linhas = ['Olá! Vim pelo site da Build Atlas.', ''];
     if (nome)     linhas.push('*Nome:* ' + nome);
+    if (email)    linhas.push('*E-mail:* ' + email);
     if (whatsapp) linhas.push('*WhatsApp:* ' + whatsapp);
     if (objetivo) linhas.push('*Objetivo:* ' + objetivo);
     if (valor)    linhas.push('*Faixa de valor:* ' + valor);
+    if (mensagem) linhas.push('*Mensagem:* ' + mensagem);
     var texto = linhas.join('\n');
     var urlWA = 'https://wa.me/' + NUMERO_WA + '?text=' + encodeURIComponent(texto);
 
